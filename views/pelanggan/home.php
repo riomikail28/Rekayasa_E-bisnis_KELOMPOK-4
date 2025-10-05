@@ -23,7 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
       object-fit: cover;
     }
   </style>
-  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
 
