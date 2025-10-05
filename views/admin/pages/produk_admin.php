@@ -1,35 +1,50 @@
 <?php
-require_once __DIR__ . '/../../../config/koneksi.php';
-
-$result = mysqli_query($conn, "SELECT * FROM produk");
+require_once __DIR__ . '/../../../models/produkModel.php';
+$produk = getAllProduk(); // Ambil dari tb_produk
 ?>
 
-<div class="container mt-4">
-  <h3 class="text-pink fw-bold">📦 Daftar Produk</h3>
-  <a href="dashboard_admin.php?page=tambah_produk" class="btn btn-pink mb-3">Tambah Produk</a>
-  <table class="table table-bordered table-striped">
-    <thead class="table-pink">
-      <tr>
-        <th>Nama Produk</th>
-        <th>Kategori</th>
-        <th>Harga</th>
-        <th>Stok</th>
-        <th>Aksi</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php while ($row = mysqli_fetch_assoc($result)): ?>
-      <tr>
-        <td><?= htmlspecialchars($row['nama_produk']) ?></td>
-        <td><?= htmlspecialchars($row['kategori']) ?></td>
-        <td>Rp <?= number_format($row['harga'], 0, ',', '.') ?></td>
-        <td><?= $row['stok'] ?></td>
-        <td>
-          <a href="dashboard_admin.php?page=edit_produk&id=<?= $row['id'] ?>" class="btn btn-sm btn-warning">Edit</a>
-          <a href="dashboard_admin.php?page=hapus_produk&id=<?= $row['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin hapus produk ini?')">Hapus</a>
-        </td>
-      </tr>
-      <?php endwhile; ?>
-    </tbody>
-  </table>
+<div class="container">
+  <h4 class="fw-bold mb-4">📦 Daftar Produk</h4>
+
+  <a href="dashboard_admin.php?page=tambah_produk" class="btn btn-success mb-3">➕ Tambah Produk Baru</a>
+
+  <?php if (count($produk) === 0): ?>
+    <div class="alert alert-warning">Belum ada produk yang ditambahkan.</div>
+  <?php else: ?>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Gambar</th>
+            <th>Nama Produk</th>
+            <th>Deskripsi</th>
+            <th>Harga</th>
+            <th>Stok</th>
+            <th>Kategori</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($produk as $p): ?>
+            <?php
+              $gambarPath = $p['gambar'] ? "/Rekayasa-E-bisnis_KELOMPOK-4/uploads/{$p['gambar']}" : "/Rekayasa-E-bisnis_KELOMPOK-4/assets/default.png";
+              $deskripsi = strlen($p['deskripsi']) > 60 ? substr($p['deskripsi'], 0, 60) . '...' : $p['deskripsi'];
+            ?>
+            <tr>
+              <td><img src="<?= $gambarPath ?>" alt="Gambar Produk" width="80" height="80" style="object-fit:cover; border-radius:8px;"></td>
+              <td><?= htmlspecialchars($p['nama_produk']) ?></td>
+              <td><?= htmlspecialchars($deskripsi) ?></td>
+              <td>Rp <?= number_format($p['harga'], 0, ',', '.') ?></td>
+              <td><?= $p['stok'] ?></td>
+              <td><?= htmlspecialchars($p['kategori']) ?></td>
+              <td>
+                <a href="dashboard_admin.php?page=edit_produk&id=<?= $p['id'] ?>" class="btn btn-sm btn-warning">✏️ Edit</a>
+                <a href="pages/hapus_produk.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus produk ini?')">🗑️ Hapus</a>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+  <?php endif; ?>
 </div>

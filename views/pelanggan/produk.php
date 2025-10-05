@@ -1,44 +1,52 @@
 <?php
-require_once '../../models/produkModel.php';
-$produk = getAllProduk();
+require_once '../../config/koneksi.php';
+
+// Ambil semua data dari tabel produk
+$query = "SELECT * FROM produk";
+$result = mysqli_query($conn, $query);
 ?>
 
-<h2>Produk Tersedia</h2>
-<?php foreach ($produk as $p): ?>
-  <div>
-    <img src="../../uploads/<?= $p['gambar'] ?>" width="100"><br>
-    <strong><?= $p['nama_produk'] ?></strong><br>
-    Rp<?= $p['harga'] ?><br>
-    <form method="POST" action="../../controllers/transaksiController.php">
-      <input type="hidden" name="id_produk" value="<?= $p['id'] ?>">
-      <input type="number" name="jumlah" value="1" min="1">
-      <button type="submit" name="beli">Beli</button>
-    </form>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Daftar Produk</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container py-5">
+    <h2 class="text-center mb-4 fw-bold">Daftar Produk</h2>
+
+    <table class="table table-bordered table-striped">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Nama Produk</th>
+          <th>Deskripsi</th>
+          <th>Harga</th>
+          <th>Stok</th>
+          <th>Kategori</th>
+          <th>Gambar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php while ($row = mysqli_fetch_assoc($result)): ?>
+          <?php
+            $gambar = $row['gambar'] ?? '';
+            $gambarPath = $gambar ? "../../uploads/$gambar" : "../../assets/default.png";
+          ?>
+          <tr>
+            <td><?= $row['id'] ?></td>
+            <td><?= htmlspecialchars($row['nama_produk']) ?></td>
+            <td><?= htmlspecialchars($row['deskripsi']) ?></td>
+            <td>Rp <?= number_format($row['harga'], 0, ',', '.') ?></td>
+            <td><?= $row['stok'] ?></td>
+            <td><?= htmlspecialchars($row['kategori']) ?></td>
+            <td><img src="<?= $gambarPath ?>" width="80" height="80" style="object-fit:cover;" alt="Gambar Produk"></td>
+          </tr>
+        <?php endwhile; ?>
+      </tbody>
+    </table>
   </div>
-  <hr>
-<?php endforeach; ?>
-
-<h4>Berikan Ulasan</h4>
-<form method="POST" action="../../controllers/ulasanController.php">
-  <input type="hidden" name="id_produk" value="<?= $p['id'] ?>">
-  <input type="hidden" name="id_user" value="<?= $_SESSION['id_user'] ?>">
-  <label>Rating (1–5):</label>
-  <input type="number" name="rating" min="1" max="5" required><br>
-  <label>Komentar:</label>
-  <textarea name="komentar" rows="2" required></textarea><br>
-  <button type="submit" name="kirim" class="btn btn-warning">Kirim Ulasan</button>
-</form>
-
-<?php
-$ulasan = getUlasanByProduk($p['id']);
-?>
-
-<h4>Ulasan Pelanggan</h4>
-<?php foreach ($ulasan as $u): ?>
-  <div class="border p-2 mb-2">
-    <strong><?= $u['username'] ?></strong> 
-    <span class="badge bg-info"><?= $u['rating'] ?> ⭐</span><br>
-    <em><?= $u['komentar'] ?></em><br>
-    <small><?= $u['waktu'] ?></small>
-  </div>
-<?php endforeach; ?>
+</body>
+</html>

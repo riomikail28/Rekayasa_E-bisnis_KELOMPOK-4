@@ -36,11 +36,11 @@ if (session_status() === PHP_SESSION_NONE) {
           <li class="nav-item"><a class="nav-link" href="katalog.php">Katalog</a></li>
           <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
           <li class="nav-item"><a class="nav-link" href="riwayat.php">Riwayat</a></li>
-          <li class="nav-item"><a class="nav-link" href="dashboard_pelanggan.php">Profil</a></li>
-
+          <li class="nav-item"><a class="nav-link" href="dashboard_pelanggan.php">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
           <?php if (isset($_SESSION['role'])): ?>
             <li class="nav-item">
-              <a class="btn btn-outline-danger" href="controllers/logout.php">Logout</a>
+              <a class="btn btn-outline-danger" href="../../controllers/logout.php">Logout</a>
             </li>
           <?php else: ?>
             <li class="nav-item">
