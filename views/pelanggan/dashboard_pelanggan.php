@@ -30,6 +30,7 @@ $username = $_SESSION['username'];
         <li class="nav-item"><a class="nav-link" href="katalog.php">Katalog</a></li>
         <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
         <li class="nav-item"><a class="nav-link" href="riwayat.php">Riwayat</a></li>
+        <li class="nav-item"><a class="nav-link" href="dashboard_pelanggan.php">Dashboard</a></li>
         <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
         <li class="nav-item"><a class="btn btn-outline-danger ms-2" href="../../controllers/Logout.php">Logout</a></li>
       </ul>

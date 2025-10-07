@@ -2,12 +2,13 @@
 session_start();
 require_once '../../config/koneksi.php';
 
-if (!isset($_SESSION['user_id'])) {
+// Pastikan user sudah login
+if (!isset($_SESSION['id_users'])) {
     header("Location: ../../auth/login.php");
     exit;
 }
 
-$id = intval($_SESSION['user_id']);
+$id = intval($_SESSION['id_users']);
 $result = mysqli_query($conn, "SELECT * FROM users WHERE id_users = $id");
 
 if (!$result || mysqli_num_rows($result) === 0) {
@@ -30,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($nama && $email) {
         $update = mysqli_prepare($conn, "UPDATE users SET nama_lengkap = ?, email = ?, no_hp = ?, jenis_kelamin = ?, tanggal_lahir = ? WHERE id_users = ?");
         mysqli_stmt_bind_param($update, "sssssi", $nama, $email, $no_hp, $jenis, $tanggal, $id);
-        $success = mysqli_stmt_execute($update) ? "Profil berhasil diperbarui." : "Gagal memperbarui profil.";
+        $success = mysqli_stmt_execute($update) ? "✅ Profil berhasil diperbarui." : "❌ Gagal memperbarui profil.";
         mysqli_stmt_close($update);
     } else {
         $error = "Nama dan email wajib diisi.";
@@ -65,6 +66,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     .btn-save:hover {
       opacity: 0.9;
     }
+    .btn-back {
+      border: 1px solid #4facfe;
+      color: #4facfe;
+    }
+    .btn-back:hover {
+      background-color: #4facfe;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -75,9 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <h3 class="text-center mb-4 fw-bold">Edit Profil</h3>
 
           <?php if ($success): ?>
-            <div class="alert alert-success"><?= $success ?></div>
+            <div class="alert alert-success text-center"><?= $success ?></div>
           <?php elseif ($error): ?>
-            <div class="alert alert-danger"><?= $error ?></div>
+            <div class="alert alert-danger text-center"><?= $error ?></div>
           <?php endif; ?>
 
           <form method="POST">
@@ -96,20 +105,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="mb-3">
               <label class="form-label">Jenis Kelamin</label>
               <select name="jenis_kelamin" class="form-select">
-                <option value="">Pilih</option>
-                <option value="Laki-laki" <?= $user['jenis_kelamin'] === 'Laki-laki' ? 'selected' : '' ?>>Laki-laki</option>
-                <option value="Perempuan" <?= $user['jenis_kelamin'] === 'Perempuan' ? 'selected' : '' ?>>Perempuan</option>
-              </select>
+              <option value="">Pilih</option>
+              <option value="Pria" <?= $user['jenis_kelamin'] === 'Pria' ? 'selected' : '' ?>>Pria</option>
+              <option value="Wanita" <?= $user['jenis_kelamin'] === 'Wanita' ? 'selected' : '' ?>>Wanita</option>
+            </select>
             </div>
             <div class="mb-3">
               <label class="form-label">Tanggal Lahir</label>
               <input type="date" name="tanggal_lahir" class="form-control" value="<?= htmlspecialchars($user['tanggal_lahir']) ?>">
             </div>
-            <button type="submit" class="btn btn-save w-100">Simpan Perubahan</button>
+            <button type="submit" class="btn btn-save w-100">💾 Simpan Perubahan</button>
           </form>
 
           <div class="text-center mt-4">
-            <a href="profil.php" class="btn btn-outline-secondary">Kembali ke Profil</a>
+            <a href="profil.php" class="btn btn-back">← Kembali ke Profil</a>
           </div>
         </div>
       </div>

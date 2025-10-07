@@ -3,12 +3,12 @@ session_start();
 require_once '../../config/koneksi.php';
 
 // Pastikan user sudah login
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['id_users'])) {
     header("Location: ../../auth/login.php");
     exit;
 }
 
-$id = intval($_SESSION['user_id']);
+$id = intval($_SESSION['id_users']);
 $result = mysqli_query($conn, "SELECT * FROM users WHERE id_users = $id");
 
 if (!$result || mysqli_num_rows($result) === 0) {
@@ -31,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_foto']) && iss
     } elseif ($file['error'] !== 0) {
         echo "<div class='alert alert-danger text-center'>Terjadi kesalahan saat upload.</div>";
     } else {
-        // Pastikan folder uploads tersedia
         $uploadDir = '../../uploads/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
@@ -46,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_foto']) && iss
             mysqli_stmt_execute($update);
             mysqli_stmt_close($update);
             echo "<div class='alert alert-success text-center'>Foto berhasil diperbarui.</div>";
-            // Refresh data
             $result = mysqli_query($conn, "SELECT * FROM users WHERE id_users = $id");
             $user = mysqli_fetch_assoc($result);
         } else {
@@ -78,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_foto']) && iss
     }
     .btn-edit1 {
       background-color: rgb(217, 255, 0);
-      color: white;
+      color: black;
       border: none;
     }
     .btn-edit:hover, .btn-edit1:hover {
@@ -88,6 +86,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_foto']) && iss
       border: 4px solid #ff6ec4;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       object-fit: cover;
+    }
+    .badge-role {
+      font-size: 0.85rem;
+      background-color: #ff6ec4;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 8px;
     }
   </style>
 </head>
@@ -104,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_foto']) && iss
           ?>
 
           <div class="text-center mb-4">
-            <img src="<?= $fotoPath ?>" alt="Foto Profil" class="rounded-circle" width="140" height="140">
+            <img src="<?= htmlspecialchars($fotoPath) ?>" alt="Foto Profil" class="rounded-circle" width="140" height="140">
             <form method="POST" enctype="multipart/form-data" class="mt-3">
               <div class="mb-2">
                 <input type="file" name="foto" class="form-control" accept=".jpg,.jpeg,.png,.gif" required>
@@ -120,12 +125,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_foto']) && iss
             <tr><th>No HP</th><td><?= htmlspecialchars($user['no_hp'] ?? '-') ?></td></tr>
             <tr><th>Jenis Kelamin</th><td><?= htmlspecialchars($user['jenis_kelamin'] ?? '-') ?></td></tr>
             <tr><th>Tanggal Lahir</th><td><?= htmlspecialchars($user['tanggal_lahir'] ?? '-') ?></td></tr>
-            <tr><th>Role</th><td><?= htmlspecialchars($user['role']) ?></td></tr>
+            <tr><th>Role</th><td><span class="badge-role"><?= htmlspecialchars($user['role']) ?></span></td></tr>
+            <tr><th>Tanggal Registrasi</th><td><?= htmlspecialchars(date('d-m-Y', strtotime($user['created_at'] ?? ''))) ?></td></tr>
           </table>
 
           <div class="text-center mt-4">
             <a href="../../controllers/logout.php" class="btn btn-outline-danger">Logout</a>
             <a href="edit_profil.php" class="btn btn-edit ms-2">Edit Profil</a>
+            <a href="ubah_password.php" class="btn btn-warning ms-2">Ubah Password</a>
             <a href="home_login.php" class="btn btn-edit1 ms-2">Home</a>
           </div>
         </div>

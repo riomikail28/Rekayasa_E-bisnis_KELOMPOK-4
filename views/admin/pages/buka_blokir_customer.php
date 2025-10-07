@@ -1,19 +1,17 @@
 <?php
-require_once __DIR__'../../../config/koneksi.php';
+require_once __DIR__ . '/../../../config/koneksi.php';
 
-$id = $_GET['id'] ?? null;
-if (!$id) {
-  echo "<div class='alert alert-danger'>ID customer tidak ditemukan.</div>";
-  exit;
-}
-
-$query = "UPDATE users SET status = 'Aktif' WHERE id = $id AND role = 'pelanggan'";
-if (mysqli_query($conn, $query)) {
-  echo "<div class='alert alert-success'>Customer berhasil diaktifkan kembali.</div>";
+$id = $_GET['id'] ?? '';
+if ($id) {
+    $query = "UPDATE users SET status = 'Aktif' WHERE id_users = ?";
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, 'i', $id);
+    if (mysqli_stmt_execute($stmt)) {
+        header("Location: dashboard_admin.php?page=daftar_customer&msg=success");
+    } else {
+        header("Location: dashboard_admin.php?page=daftar_customer&msg=error");
+    }
 } else {
-  echo "<div class='alert alert-danger'>Gagal mengaktifkan customer.</div>";
+    header("Location: dashboard_admin.php?page=daftar_customer&msg=warning");
 }
 ?>
-<div class="container mt-3">
-  <a href="dashboard_admin.php?page=daftar_customer" class="btn btn-outline-pink">Kembali ke Daftar Customer</a>
-</div>

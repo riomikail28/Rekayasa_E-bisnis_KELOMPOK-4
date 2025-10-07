@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../../config/koneksi.php';
 
 $id = $_GET['id'] ?? '';
 if ($id) {
-    $query = "UPDATE users SET status = 'Blokir' WHERE id_users = ?";
+    $query = "DELETE FROM users WHERE id_users = ?";
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, 'i', $id);
     if (mysqli_stmt_execute($stmt)) {

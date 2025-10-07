@@ -1,5 +1,13 @@
 <?php
+session_start();
 require_once '../../config/koneksi.php';
+
+// Pastikan user login
+if (!isset($_SESSION['id_users'])) {
+    header("Location: ../../auth/login.php");
+    exit;
+}
+
 $result = mysqli_query($conn, "SELECT * FROM produk ORDER BY id DESC");
 ?>
 
@@ -38,13 +46,41 @@ $result = mysqli_query($conn, "SELECT * FROM produk ORDER BY id DESC");
   </style>
 </head>
 <body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary" href="home_login.php">Buketminiku</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="home_login.php">🏠 Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="keranjang.php">🛒 Keranjang</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="riwayat.php">📦 Riwayat</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-danger" href="../../auth/logout.php" onclick="return confirm('Yakin ingin logout?')">🔓 Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
   <div class="container py-5">
     <h2 class="text-center fw-bold mb-4">🌸 Wishlist Buketminiku</h2>
+
+    <?php if (isset($_GET['msg'])): ?>
+      <div class="alert alert-success text-center"><?= htmlspecialchars($_GET['msg']) ?></div>
+    <?php endif; ?>
 
     <div class="row">
       <?php while ($p = mysqli_fetch_assoc($result)): ?>
         <?php
-          // Path gambar disesuaikan dengan posisi file katalog.php
           $gambar = $p['gambar'] ?? '';
           $gambarPath = $gambar ? "../../uploads/$gambar" : "../../assets/default.png";
         ?>
@@ -57,6 +93,7 @@ $result = mysqli_query($conn, "SELECT * FROM produk ORDER BY id DESC");
               <form method="POST" action="../../controllers/transaksiController.php">
                 <input type="hidden" name="id_produk" value="<?= $p['id'] ?>">
                 <input type="number" name="jumlah" value="1" min="1" class="form-control mb-2">
+                <input type="hidden" name="redirect" value="katalog">
                 <button type="submit" name="beli" class="btn btn-beli w-100">Beli</button>
               </form>
             </div>

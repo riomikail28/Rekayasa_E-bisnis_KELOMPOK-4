@@ -1,28 +1,26 @@
 <?php
 require_once __DIR__ . '/../../../config/koneksi.php';
 
-$id = $_GET['id'] ?? null;
-if (!$id) {
-  echo "<div class='alert alert-danger'>ID customer tidak ditemukan.</div>";
-  exit;
-}
-
-$result = mysqli_query($conn, "SELECT * FROM users WHERE id = $id AND role = 'pelanggan'");
-$customer = mysqli_fetch_assoc($result);
-
-if (!$customer) {
-  echo "<div class='alert alert-danger'>Customer tidak ditemukan.</div>";
-  exit;
-}
+$id = $_GET['id'] ?? '';
+$query = "SELECT * FROM users WHERE id_users = ?";
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, 'i', $id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$data = mysqli_fetch_assoc($result);
 ?>
 
 <div class="container mt-4">
-  <h3 class="text-pink fw-bold">👤 Detail Pelanggan</h3>
-  <table class="table table-bordered">
-    <tr><th>Username</th><td><?= $customer['username'] ?></td></tr>
-    <tr><th>Status</th><td><?= $customer['status'] ?? 'Aktif' ?></td></tr>
-    <tr><th>Email</th><td><?= $customer['email'] ?? '-' ?></td></tr>
-    <tr><th>Alamat</th><td><?= $customer['alamat'] ?? '-' ?></td></tr>
-  </table>
-  <a href="dashboard_admin.php?page=daftar_customer" class="btn btn-outline-pink">Kembali</a>
+  <h3 class="fw-bold text-info">🔍 Detail Customer</h3>
+  <?php if ($data): ?>
+    <ul class="list-group">
+      <li class="list-group-item"><strong>Username:</strong> <?= htmlspecialchars($data['username']) ?></li>
+      <li class="list-group-item"><strong>Nama Lengkap:</strong> <?= htmlspecialchars($data['nama_lengkap']) ?></li>
+      <li class="list-group-item"><strong>Email:</strong> <?= htmlspecialchars($data['email']) ?></li>
+      <li class="list-group-item"><strong>No HP:</strong> <?= htmlspecialchars($data['no_hp']) ?></li>
+      <li class="list-group-item"><strong>Status:</strong> <?= htmlspecialchars($data['status'] ?? 'Aktif') ?></li>
+    </ul>
+  <?php else: ?>
+    <div class="alert alert-warning">Data customer tidak ditemukan.</div>
+  <?php endif; ?>
 </div>
