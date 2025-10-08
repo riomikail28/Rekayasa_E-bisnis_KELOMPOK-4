@@ -110,27 +110,42 @@ $total_belanja = 0;
           </div>
         </div>
         <?php endforeach; ?>
+        <div class="text-end mt-3">
+        <h5 class="fw-bold">Total Belanja: <span class="text-success">Rp<?= number_format($total_belanja) ?></span></h5>
+      </div>
+
       </div>
 
       <div class="col-lg-4">
-        <div class="summary-box">
-          <h5 class="fw-bold mb-3">Ringkasan Belanja</h5>
-          <div class="d-flex justify-content-between mb-2">
-            <span>Total Item</span>
-            <span><?= count($keranjang) ?> produk</span>
-          </div>
-          <div class="d-flex justify-content-between mb-3">
-            <span>Total Belanja</span>
-            <span class="fw-bold text-success">Rp<?= number_format($total_belanja) ?></span>
-          </div>
-          <form method="POST" action="../../controllers/checkoutController.php">
-            <?php foreach ($keranjang as $item): ?>
-              <input type="hidden" name="id_produk[]" value="<?= $item['id_produk'] ?>">
-              <input type="hidden" name="jumlah[]" value="<?= $item['jumlah'] ?>">
-            <?php endforeach; ?>
-            <button type="submit" class="btn btn-success w-100">Lanjut ke Checkout</button>
-          </form>
-          <a href="katalog.php" class="btn btn-outline-secondary w-100 mt-2">Belanja Lagi</a>
+              <div class="summary-box">
+                <form method="POST" action="../../controllers/checkoutController.php">
+        <?php foreach ($keranjang as $item): ?>
+          <input type="hidden" name="id_produk[]" value="<?= $item['id_produk'] ?>">
+          <input type="hidden" name="jumlah[]" value="<?= $item['jumlah'] ?>">
+        <?php endforeach; ?>
+
+        <div class="mb-3">
+          <label for="pengiriman" class="form-label">Metode Pengiriman</label>
+          <select name="pengiriman" id="pengiriman" class="form-select" required>
+            <option value="">-- Pilih Pengiriman --</option>
+            <option value="GoSend">GoSend</option>
+            <option value="GrabExpress">GrabExpress</option>
+            <option value="Shopee Instant">Shopee Instant</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="pembayaran" class="form-label">Metode Pembayaran</label>
+          <select name="pembayaran" id="pembayaran" class="form-select" required>
+            <option value="">-- Pilih Pembayaran --</option>
+            <option value="Transfer BCA">Transfer BCA</option>
+            <option value="Transfer BNI">Transfer BNI</option>
+            <option value="COD">COD (Bayar di tempat)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">Lanjut ke Checkout</button>
+      </form>
         </div>
       </div>
     </div>

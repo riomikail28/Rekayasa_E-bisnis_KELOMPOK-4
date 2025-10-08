@@ -1,21 +1,25 @@
 <?php
-require_once __DIR__ . '/../config/koneksi.php';
 session_start();
+require_once __DIR__ . '/../config/koneksi.php';
 
 $id_user = $_SESSION['id_users'] ?? null;
+$pengiriman = $_POST['pengiriman'] ?? null;
+$pembayaran = $_POST['pembayaran'] ?? null;
 $id_produk_list = $_POST['id_produk'] ?? [];
-$jumlah_list    = $_POST['jumlah'] ?? [];
+$jumlah_list = $_POST['jumlah'] ?? [];
 
-if (!$id_user || empty($id_produk_list) || empty($jumlah_list)) {
-    echo "Data checkout tidak lengkap.";
+if (!$id_user || !$pengiriman || !$pembayaran || empty($id_produk_list) || count($id_produk_list) !== count($jumlah_list)) {
+    header("Location: ../views/pelanggan/keranjang.php?msg=Data checkout tidak lengkap");
     exit;
 }
 
-for ($i = 0; $i < count($id_produk_list); $i++) {
-    $id_produk = $id_produk_list[$i];
-    $jumlah    = $jumlah_list[$i];
+// Hitung total belanja dan siapkan data produk
+$total_belanja = 0;
+$produk_data = [];
 
-    // Ambil harga produk
+foreach ($id_produk_list as $i => $id_produk) {
+    $jumlah = (int) $jumlah_list[$i];
+
     $stmt = mysqli_prepare($conn, "SELECT harga FROM produk WHERE id = ?");
     mysqli_stmt_bind_param($stmt, "i", $id_produk);
     mysqli_stmt_execute($stmt);
@@ -25,20 +29,47 @@ for ($i = 0; $i < count($id_produk_list); $i++) {
 
     if (!$produk) continue;
 
-    $total = $produk['harga'] * $jumlah;
+    $harga = (int) $produk['harga'];
+    $subtotal = $harga * $jumlah;
+    $total_belanja += $subtotal;
 
-    // Simpan transaksi
-    $stmt = mysqli_prepare($conn, "INSERT INTO transaksi (id_user, id_produk, jumlah, total, status, approved, tanggal) VALUES (?, ?, ?, ?, 'pending', 'pending', NOW())");
-    mysqli_stmt_bind_param($stmt, "iiid", $id_user, $id_produk, $jumlah, $total);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
+    $produk_data[] = [
+        'id_produk' => $id_produk,
+        'jumlah' => $jumlah,
+        'harga' => $harga
+    ];
 }
 
-// Kosongkan keranjang
+if (empty($produk_data)) {
+    header("Location: ../views/pelanggan/keranjang.php?msg=Produk tidak valid");
+    exit;
+}
+
+// Simpan transaksi utama (satu baris)
+$status = 'pending';
+$approved = 'pending';
+$bukti_pembayaran = ''; // kosong dulu, bisa diisi saat upload bukti
+
+$stmt = mysqli_prepare($conn, "INSERT INTO transaksi (id_user, total, metode_pengiriman, metode_pembayaran, status, bukti_pembayaran, approved, tgl_transaksi) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())");
+mysqli_stmt_bind_param($stmt, "idsssss", $id_user, $total_belanja, $pengiriman, $pembayaran, $status, $bukti_pembayaran, $approved);
+mysqli_stmt_execute($stmt);
+$id_transaksi = mysqli_insert_id($conn);
+mysqli_stmt_close($stmt);
+
+// Simpan detail item ke tabel detail_transaksi
+$stmt = mysqli_prepare($conn, "INSERT INTO detail_transaksi (id_transaksi, id_produk, jumlah, harga) VALUES (?, ?, ?, ?)");
+foreach ($produk_data as $item) {
+    mysqli_stmt_bind_param($stmt, "iiii", $id_transaksi, $item['id_produk'], $item['jumlah'], $item['harga']);
+    mysqli_stmt_execute($stmt);
+}
+mysqli_stmt_close($stmt);
+
+// Kosongkan keranjang setelah checkout
 $stmt = mysqli_prepare($conn, "DELETE FROM keranjang WHERE id_user = ?");
 mysqli_stmt_bind_param($stmt, "i", $id_user);
 mysqli_stmt_execute($stmt);
 mysqli_stmt_close($stmt);
 
-header("Location: ../views/pelanggan/riwayat.php?msg=Checkout berhasil");
+// Redirect ke keranjang dengan pesan sukses
+header("Location: ../views/pelanggan/keranjang.php?msg=Checkout berhasil! Silakan tunggu konfirmasi admin.");
 exit;

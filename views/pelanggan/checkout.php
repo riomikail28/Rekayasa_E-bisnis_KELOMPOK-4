@@ -2,9 +2,7 @@
 session_start();
 require_once '../../config/koneksi.php';
 require_once '../../controllers/keranjangController.php';
-require_once '../../controllers/transaksiController.php';
 
-// Pastikan user login
 $id_user = $_SESSION['id_users'] ?? null;
 if (!$id_user) {
     echo "<div class='alert alert-warning text-center mt-5'>Silakan login terlebih dahulu.</div>";
@@ -18,10 +16,34 @@ if (empty($items)) {
     exit;
 }
 
-// Simpan transaksi per item
+// Ambil input pengiriman dan pembayaran
+$pengiriman = $_POST['pengiriman'] ?? null;
+$pembayaran = $_POST['pembayaran'] ?? null;
+
+if (!$pengiriman || !$pembayaran) {
+    echo "<div class='alert alert-danger text-center mt-5'>Data checkout tidak lengkap. Silakan pilih metode pengiriman dan pembayaran.</div>";
+    exit;
+}
+
+// Hitung total belanja
+$total = 0;
 foreach ($items as $item) {
-    $total = $item['jumlah'] * $item['harga'];
-    simpanTransaksi($id_user, $item['id_produk'], $item['jumlah'], $total);
+    $total += $item['jumlah'] * $item['harga'];
+}
+
+// Simpan transaksi utama
+$stmt = mysqli_prepare($conn, "INSERT INTO transaksi (id_user, total, metode_pengiriman, metode_pembayaran, status, approval, tgl_transaksi) VALUES (?, ?, ?, ?, 'pending', 'pending', NOW())");
+mysqli_stmt_bind_param($stmt, "iiss", $id_user, $total, $pengiriman, $pembayaran);
+mysqli_stmt_execute($stmt);
+$id_transaksi = mysqli_insert_id($conn);
+mysqli_stmt_close($stmt);
+
+// Simpan detail transaksi
+foreach ($items as $item) {
+    $stmt = mysqli_prepare($conn, "INSERT INTO detail_transaksi (id_transaksi, id_produk, jumlah, harga) VALUES (?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, "iiii", $id_transaksi, $item['id_produk'], $item['jumlah'], $item['harga']);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
 }
 
 // Kosongkan keranjang
