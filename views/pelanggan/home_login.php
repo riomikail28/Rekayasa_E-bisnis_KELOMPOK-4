@@ -13,7 +13,7 @@ $result = mysqli_query($conn, "SELECT * FROM produk ORDER BY id DESC LIMIT 4");
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>BuketMinku | Toko Bunga</title>
+  <title>BuketMiniku | Toko Bunga</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@ $result = mysqli_query($conn, "SELECT * FROM produk ORDER BY id DESC LIMIT 4");
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
   <div class="container">
-    <a class="navbar-brand fw-bold text-pink" href="#">BuketMinku</a>
+    <a class="navbar-brand fw-bold text-pink" href="#">Buketminiku</a>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="katalog.php">Katalog</a></li>
@@ -50,7 +50,7 @@ $result = mysqli_query($conn, "SELECT * FROM produk ORDER BY id DESC LIMIT 4");
 <!-- Hero Section -->
 <section class="hero">
   <div class="container">
-    <h1 class="display-5 fw-bold">Selamat Datang di BuketMinku</h1>
+    <h1 class="display-5 fw-bold">Selamat Datang di BuketMiniku</h1>
     <p class="lead">Toko bunga dan hadiah untuk momen spesialmu. Kirim cinta lewat buket yang bermakna.</p>
     <a href="#produk" class="btn btn-light btn-lg mt-3">Lihat Produk</a>
   </div>
@@ -88,7 +88,7 @@ $result = mysqli_query($conn, "SELECT * FROM produk ORDER BY id DESC LIMIT 4");
 
 <!-- Footer -->
 <footer class="text-center py-3 mt-5" style="background-color: #ffb6c1;">
-  &copy; 2025 BuketMinku | WhatsApp: 0812-XXXX-XXXX | Instagram: @buketminka.id
+  &copy; 2025 BuketMiniku | WhatsApp: 0812-XXXX-XXXX | Instagram: @buketminiku.id
 </footer>
 
 </body>

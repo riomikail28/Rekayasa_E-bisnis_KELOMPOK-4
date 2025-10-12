@@ -33,7 +33,7 @@ $page = $_GET['page'] ?? 'produk_admin';
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard Admin | BuketMinku</title>
+  <title>Dashboard Admin | BuketMiniku</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/css/admin.css">
 </head>
