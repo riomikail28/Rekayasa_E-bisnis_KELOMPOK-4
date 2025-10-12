@@ -2,6 +2,10 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+require_once '../../config/koneksi.php';
+
+// Fetch first 4 products for preview
+$result = mysqli_query($conn, "SELECT * FROM produk ORDER BY id DESC LIMIT 4");
 ?>
 
 
@@ -11,19 +15,7 @@ if (session_status() === PHP_SESSION_NONE) {
   <meta charset="UTF-8">
   <title>BuketMinku | Toko Bunga</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    .hero {
-      background: linear-gradient(to right, #f8cdda, #fbc2eb);
-      padding: 80px 20px;
-      color: white;
-      text-align: center;
-    }
-    .produk-card img {
-      height: 200px;
-      object-fit: cover;
-    }
-  </style>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="../../assets/css/main.css">
 </head>
 <body>
 
@@ -69,56 +61,33 @@ if (session_status() === PHP_SESSION_NONE) {
   <div class="container">
     <h2 class="text-center mb-4">Produk Unggulan</h2>
     <div class="row">
-      <!-- Card 1 -->
-      <div class="col-md-3">
-        <div class="card produk-card shadow-sm">
-          <img src="uploads/buket1.jpg" class="card-img-top" alt="Buket Bunga">
-          <div class="card-body">
-            <h5 class="card-title">Buket Mawar Merah</h5>
-            <p class="card-text">Rp 99.000</p>
-            <a href="#" class="btn btn-pink w-100">Beli</a>
+      <?php while ($p = mysqli_fetch_assoc($result)): ?>
+        <?php
+          $gambar = $p['gambar'] ?? '';
+          $gambarPath = $gambar ? "../../uploads/$gambar" : "../../assets/default.png";
+        ?>
+        <div class="col-md-3">
+          <div class="card produk-card shadow-sm">
+            <img src="<?= $gambarPath ?>" class="card-img-top" alt="<?= htmlspecialchars($p['nama_produk']) ?>">
+            <div class="card-body">
+              <h5 class="card-title"><?= htmlspecialchars($p['nama_produk']) ?></h5>
+              <p class="card-text">Rp <?= number_format($p['harga'], 0, ',', '.') ?></p>
+              <form method="POST" action="../../controllers/transaksiController.php">
+                <input type="hidden" name="id_produk" value="<?= $p['id'] ?>">
+                <input type="number" name="jumlah" value="1" min="1" class="form-control mb-2" style="display:none;">
+                <input type="hidden" name="redirect" value="katalog">
+                <button type="submit" name="beli" class="btn btn-pink w-100">Beli</button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- Card 2 -->
-      <div class="col-md-3">
-        <div class="card produk-card shadow-sm">
-          <img src="uploads/buket2.jpg" class="card-img-top" alt="Buket Snack">
-          <div class="card-body">
-            <h5 class="card-title">Buket Snack & Minuman</h5>
-            <p class="card-text">Rp 85.000</p>
-            <a href="#" class="btn btn-pink w-100">Beli</a>
-          </div>
-        </div>
-      </div>
-      <!-- Card 3 -->
-      <div class="col-md-3">
-        <div class="card produk-card shadow-sm">
-          <img src="uploads/buket3.jpg" class="card-img-top" alt="Buket Boneka">
-          <div class="card-body">
-            <h5 class="card-title">Buket Boneka & Bunga</h5>
-            <p class="card-text">Rp 120.000</p>
-            <a href="#" class="btn btn-pink w-100">Beli</a>
-          </div>
-        </div>
-      </div>
-      <!-- Card 4 -->
-      <div class="col-md-3">
-        <div class="card produk-card shadow-sm">
-          <img src="uploads/buket4.jpg" class="card-img-top" alt="Buket Uang">
-          <div class="card-body">
-            <h5 class="card-title">Buket Uang Kreatif</h5>
-            <p class="card-text">Rp 150.000</p>
-            <a href="#" class="btn btn-pink w-100">Beli</a>
-          </div>
-        </div>
-      </div>
+      <?php endwhile; ?>
     </div>
   </div>
 </section>
 
 <!-- Footer -->
-<footer class="bg-dark text-white text-center py-3 mt-5">
+<footer class="text-center py-3 mt-5" style="background-color: #ffb6c1;">
   &copy; 2025 BuketMinku | WhatsApp: 0812-XXXX-XXXX | Instagram: @buketminka.id
 </footer>
 

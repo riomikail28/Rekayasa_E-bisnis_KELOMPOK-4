@@ -35,50 +35,7 @@ $page = $_GET['page'] ?? 'produk_admin';
   <meta charset="UTF-8">
   <title>Dashboard Admin | BuketMinku</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/css/style.css">
-  <style>
-    body {
-      background-color: #f8f9fa;
-    }
-    .sidebar {
-      height: 100vh;
-      background-color: #fff;
-      border-right: 1px solid #dee2e6;
-      position: fixed;
-      top: 0;
-      left: 0;
-      padding-top: 20px;
-      z-index: 1000;
-    }
-    .sidebar .nav-link {
-      color: #333;
-      padding: 10px 20px;
-      border-radius: 6px;
-      margin-bottom: 6px;
-    }
-    .sidebar .nav-link:hover,
-    .sidebar .nav-link.active {
-      background-color: #f06292;
-      color: white;
-    }
-    .content-area {
-      margin-left: 250px;
-      padding: 30px;
-    }
-    .text-pink {
-      color: #f06292;
-    }
-    @media (max-width: 768px) {
-      .sidebar {
-        position: relative;
-        height: auto;
-        border-right: none;
-      }
-      .content-area {
-        margin-left: 0;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="../../assets/css/admin.css">
 </head>
 <body>
   <div class="sidebar">

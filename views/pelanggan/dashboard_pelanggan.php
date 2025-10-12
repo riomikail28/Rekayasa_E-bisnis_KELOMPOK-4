@@ -33,13 +33,7 @@ mysqli_stmt_close($stmt);
   <meta charset="UTF-8">
   <title>Dashboard Pelanggan | BuketMinku</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    .text-pink { color: #ff6ec4; }
-    .btn-pink { background-color: #ff6ec4; color: white; }
-    .btn-pink:hover { background-color: #e85cb2; }
-    .card-summary { border-radius: 12px; background-color: #fff; }
-    .badge-status { font-size: 0.9rem; }
-  </style>
+  <link rel="stylesheet" href="../../assets/css/main.css">
 </head>
 <body class="bg-light">
 

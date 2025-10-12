@@ -60,41 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_foto']) && iss
   <meta charset="UTF-8">
   <title>Profil Saya - Buketminiku</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(to right, #fdfbfb, #ebedee);
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .card {
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .btn-edit {
-      background-color: #ff6ec4;
-      color: white;
-      border: none;
-    }
-    .btn-edit1 {
-      background-color: rgb(217, 255, 0);
-      color: black;
-      border: none;
-    }
-    .btn-edit:hover, .btn-edit1:hover {
-      opacity: 0.9;
-    }
-    img.rounded-circle {
-      border: 4px solid #ff6ec4;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      object-fit: cover;
-    }
-    .badge-role {
-      font-size: 0.85rem;
-      background-color: #ff6ec4;
-      color: white;
-      padding: 4px 8px;
-      border-radius: 8px;
-    }
-  </style>
+  <link rel="stylesheet" href="../../assets/css/profil.css">
 </head>
 <body>
   <div class="container py-5">
@@ -123,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_foto']) && iss
             <tr><th>Nama Lengkap</th><td><?= htmlspecialchars($user['nama_lengkap']) ?></td></tr>
             <tr><th>Email</th><td><?= htmlspecialchars($user['email'] ?? '-') ?></td></tr>
             <tr><th>No HP</th><td><?= htmlspecialchars($user['no_hp'] ?? '-') ?></td></tr>
+            <tr><th>Alamat</th><td><?= htmlspecialchars($user['alamat'] ?? '-') ?></td></tr>
             <tr><th>Jenis Kelamin</th><td><?= htmlspecialchars($user['jenis_kelamin'] ?? '-') ?></td></tr>
             <tr><th>Tanggal Lahir</th><td><?= htmlspecialchars($user['tanggal_lahir'] ?? '-') ?></td></tr>
             <tr><th>Role</th><td><span class="badge-role"><?= htmlspecialchars($user['role']) ?></span></td></tr>

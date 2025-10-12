@@ -18,31 +18,7 @@ $total_belanja = 0;
   <meta charset="UTF-8">
   <title>Keranjang Belanja</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: #f8f9fa;
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .card-product {
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-    .img-thumb {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-    .btn-hapus {
-      font-size: 0.85rem;
-    }
-    .summary-box {
-      border-radius: 12px;
-      background-color: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      padding: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="../../assets/css/main.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
@@ -63,7 +39,7 @@ $total_belanja = 0;
           <a class="nav-link" href="riwayat.php">📦 Riwayat</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-danger" href="../../auth/logout.php" onclick="return confirm('Yakin ingin logout?')">🔓 Logout</a>
+          <a class="nav-link text-danger" href="../../controllers/logout.php" onclick="return confirm('Yakin ingin logout?')">🔓 Logout</a>
         </li>
       </ul>
     </div>

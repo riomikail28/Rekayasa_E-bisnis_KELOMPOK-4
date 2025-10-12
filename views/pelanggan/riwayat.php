@@ -24,71 +24,7 @@ $transaksi = mysqli_fetch_all($result, MYSQLI_ASSOC);
   <meta charset="UTF-8">
   <title>Riwayat Transaksi</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body { background-color: #f8f9fa; }
-    .sidebar-wrapper { transition: all 0.3s ease; }
-    .sidebar {
-      height: 100vh;
-      background-color: #ffffff;
-      border-right: 1px solid #dee2e6;
-      padding-top: 30px;
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 250px;
-      z-index: 1000;
-      overflow-y: auto;
-    }
-    .sidebar a {
-      display: block;
-      padding: 12px 20px;
-      color: #333;
-      text-decoration: none;
-      border-radius: 6px;
-      margin-bottom: 8px;
-    }
-    .sidebar a:hover, .sidebar a.active {
-      background-color: #e9ecef;
-      font-weight: bold;
-    }
-    .sidebar-toggle {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 1100;
-      background-color: #ff6ec4;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 18px;
-    }
-    .content-area {
-      margin-left: 250px;
-      transition: margin-left 0.3s ease;
-    }
-    .sidebar-hidden .sidebar {
-      left: -250px;
-    }
-    .sidebar-hidden .content-area {
-      margin-left: 0;
-    }
-    .card-transaksi {
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-    .bukti-img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-    }
-    .produk-img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-  </style>
+  <link rel="stylesheet" href="../../assets/css/main.css">
 </head>
 <body>
 
@@ -101,7 +37,7 @@ $transaksi = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <a href="keranjang.php">🛒 Keranjang</a>
     <a href="riwayat.php" class="active">📦 Riwayat</a>
     <a href="home_login.php">🏠 Home</a>
-    <a href="../../auth/logout.php" class="text-danger" onclick="return confirm('Yakin ingin logout?')">🔓 Logout</a>
+    <a href="../../controllers/logout.php" class="text-danger" onclick="return confirm('Yakin ingin logout?')">🔓 Logout</a>
   </div>
 </div>
 
@@ -119,13 +55,13 @@ $transaksi = mysqli_fetch_all($result, MYSQLI_ASSOC);
       <?php foreach ($transaksi as $t): ?>
         <?php
           $stmt = mysqli_prepare($conn, "SELECT p.nama_produk, p.gambar, d.jumlah FROM detail_transaksi d JOIN produk p ON d.id_produk = p.id WHERE d.id_transaksi = ?");
-          mysqli_stmt_bind_param($stmt, "i", $t['id_transaksi']);
+          mysqli_stmt_bind_param($stmt, "i", $t['id']);
           mysqli_stmt_execute($stmt);
           $items = mysqli_stmt_get_result($stmt);
         ?>
         <div class="col-md-6 mb-4">
           <div class="card card-transaksi p-3">
-            <h5 class="fw-bold">Transaksi #<?= $t['id_transaksi'] ?></h5>
+            <h5 class="fw-bold">Transaksi #<?= $t['id'] ?></h5>
             <p>Total: Rp <?= number_format($t['total'], 0, ',', '.') ?></p>
             <p>Pengiriman: <?= htmlspecialchars($t['metode_pengiriman']) ?></p>
             <p>Pembayaran: <?= htmlspecialchars($t['metode_pembayaran']) ?></p>
@@ -148,7 +84,7 @@ $transaksi = mysqli_fetch_all($result, MYSQLI_ASSOC);
               <small class="text-muted"><?= htmlspecialchars($t['bukti_pembayaran']) ?></small>
             <?php elseif ($t['metode_pembayaran'] !== 'COD' && empty($t['bukti_pembayaran'])): ?>
               <form method="POST" action="../../controllers/upload_bukti.php" enctype="multipart/form-data" class="mt-3">
-                <input type="hidden" name="id_transaksi" value="<?= $t['id_transaksi'] ?>">
+                <input type="hidden" name="id" value="<?= $t['id'] ?>">
                 <div class="mb-2">
                   <input type="file" name="bukti" class="form-control" required>
                 </div>

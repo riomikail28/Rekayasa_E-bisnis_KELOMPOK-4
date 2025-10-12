@@ -59,24 +59,7 @@ mysqli_stmt_close($stmt);
   <meta charset="UTF-8">
   <title>Checkout - Buketminiku</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(to right, #fdfbfb, #ebedee);
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .card {
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .btn-upload {
-      background-color: #4caf50;
-      color: white;
-      border: none;
-    }
-    .btn-upload:hover {
-      opacity: 0.9;
-    }
-  </style>
+  <link rel="stylesheet" href="../../assets/css/main.css">
 </head>
 <body>
   <div class="container py-5">
@@ -85,7 +68,7 @@ mysqli_stmt_close($stmt);
         <div class="card p-4 text-center">
           <h3 class="fw-bold mb-3 text-success">✅ Checkout Berhasil!</h3>
           <p class="mb-4">Terima kasih telah berbelanja di Buketminiku. Silakan upload bukti pembayaran di halaman <a href="riwayat.php">Riwayat</a>.</p>
-          <a href="riwayat.php" class="btn btn-upload">Upload Bukti Pembayaran</a>
+          <a href="riwayat.php" class="btn btn-upload-green">Upload Bukti Pembayaran</a>
           <a href="katalog.php" class="btn btn-outline-secondary mt-2">Belanja Lagi</a>
         </div>
       </div>

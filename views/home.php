@@ -11,19 +11,7 @@ if (session_status() === PHP_SESSION_NONE) {
   <meta charset="UTF-8">
   <title>BuketMinku | Toko Bunga</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    .hero {
-      background: linear-gradient(to right, #f8cdda, #fbc2eb);
-      padding: 80px 20px;
-      color: white;
-      text-align: center;
-    }
-    .produk-card img {
-      height: 200px;
-      object-fit: cover;
-    }
-  </style>
-  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body>
 
@@ -51,7 +39,7 @@ if (session_status() === PHP_SESSION_NONE) {
 </nav>
 
 <!-- Hero Section -->
-<section class="hero">
+<section class="hero" style="background: linear-gradient(to right, #f8cdda, #f06292, #d81b60);">
   <div class="container">
     <h1 class="display-5 fw-bold">Selamat Datang di BuketMinku</h1>
     <p class="lead">Toko bunga dan hadiah untuk momen spesialmu. Kirim cinta lewat buket yang bermakna.</p>
@@ -113,7 +101,7 @@ if (session_status() === PHP_SESSION_NONE) {
 </section>
 
 <!-- Footer -->
-<footer class="bg-dark text-white text-center py-3 mt-5">
+<footer class="text-center py-3 mt-5" style="background-color: #ffb6c1;">
   &copy; 2025 BuketMinku | WhatsApp: 0812-XXXX-XXXX | Instagram: @buketminka.id
 </footer>
 

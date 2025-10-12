@@ -1,11 +1,9 @@
 <?php
-require_once '../../config/koneksi.php';
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/../../../config/koneksi.php';
+if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../../auth/login.php");
+    header("Location: ../../../auth/login.php");
     exit;
 }
 
@@ -25,7 +23,8 @@ $query = "SELECT
             t.metode_pembayaran, 
             t.status, 
             t.approved, 
-            u.username
+            u.username,
+            u.alamat
           FROM transaksi t
           JOIN users u ON t.id_user = u.id_users
           $where
@@ -40,13 +39,7 @@ $result = mysqli_query($conn, $query);
   <meta charset="UTF-8">
   <title>Laporan Penjualan</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    .badge-status {
-      font-size: 0.85rem;
-      padding: 6px 10px;
-      border-radius: 8px;
-    }
-  </style>
+  <link rel="stylesheet" href="../../../assets/css/admin.css">
 </head>
 <body class="bg-light">
 <div class="container py-4">
@@ -63,7 +56,7 @@ $result = mysqli_query($conn, $query);
     </div>
     <div class="col-md-4 d-flex align-items-end">
       <button type="submit" class="btn btn-primary me-2">Filter</button>
-      <a href="../../controllers/admin/pages/export_csv.php?awal=<?= urlencode($tgl_awal) ?>&akhir=<?= urlencode($tgl_akhir) ?>" class="btn btn-success">📥 Export CSV</a>
+      <a href="export_csv.php?awal=<?= urlencode($tgl_awal) ?>&akhir=<?= urlencode($tgl_akhir) ?>" class="btn btn-success">📥 Export CSV</a>
     </div>
   </form>
 
@@ -77,6 +70,7 @@ $result = mysqli_query($conn, $query);
         <th>Pembayaran</th>
         <th>Status</th>
         <th>Approved</th>
+        <th>Alamat</th>
       </tr>
     </thead>
     <tbody>
@@ -97,6 +91,7 @@ $result = mysqli_query($conn, $query);
               <span class="badge bg-<?= $row['approved'] === 'disetujui' ? 'success' : ($row['approved'] === 'ditolak' ? 'danger' : 'secondary') ?> badge-status">
                 <?= ucfirst($row['approved']) ?>
               </span>
+              <td><?= htmlspecialchars($row['alamat']) ?></td>
             </td>
           </tr>
         <?php endwhile; ?>

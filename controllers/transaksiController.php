@@ -93,10 +93,10 @@ function getTransaksiByUser($id_user) {
 //
 // ✅ Fungsi upload bukti pembayaran
 //
-function uploadBuktiPembayaran($id_transaksi, $filename) {
+function uploadBuktiPembayaran($id, $filename) {
     global $conn;
     $stmt = mysqli_prepare($conn, "UPDATE transaksi SET bukti_pembayaran = ?, status = 'dibayar' WHERE id = ?");
-    mysqli_stmt_bind_param($stmt, "si", $filename, $id_transaksi);
+    mysqli_stmt_bind_param($stmt, "si", $filename, $id);
     $success = mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     return $success;

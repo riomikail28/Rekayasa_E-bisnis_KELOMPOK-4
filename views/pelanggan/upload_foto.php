@@ -45,24 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto'])) {
   <meta charset="UTF-8">
   <title>Upload Foto - Buketminiku</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(to right, #fdfbfb, #ebedee);
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .card {
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .btn-upload {
-      background-color: #00c6ff;
-      color: white;
-      border: none;
-    }
-    .btn-upload:hover {
-      opacity: 0.9;
-    }
-  </style>
+  <link rel="stylesheet" href="../../assets/css/main.css">
 </head>
 <body>
   <div class="container py-5">
@@ -82,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto'])) {
               <label class="form-label">Pilih Foto</label>
               <input type="file" name="foto" class="form-control" accept=".jpg,.jpeg,.png,.gif" required>
             </div>
-            <button type="submit" class="btn btn-upload w-100">Upload</button>
+            <button type="submit" class="btn btn-upload-blue w-100">Upload</button>
           </form>
 
           <div class="text-center mt-4">

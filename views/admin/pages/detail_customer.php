@@ -18,6 +18,7 @@ $data = mysqli_fetch_assoc($result);
       <li class="list-group-item"><strong>Nama Lengkap:</strong> <?= htmlspecialchars($data['nama_lengkap']) ?></li>
       <li class="list-group-item"><strong>Email:</strong> <?= htmlspecialchars($data['email']) ?></li>
       <li class="list-group-item"><strong>No HP:</strong> <?= htmlspecialchars($data['no_hp']) ?></li>
+      <li class="list-group-item"><strong>Alamat:</strong> <?= htmlspecialchars($data['alamat']) ?></li>
       <li class="list-group-item"><strong>Status:</strong> <?= htmlspecialchars($data['status'] ?? 'Aktif') ?></li>
     </ul>
   <?php else: ?>

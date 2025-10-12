@@ -25,12 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama     = trim($_POST['nama_lengkap'] ?? '');
     $email    = trim($_POST['email'] ?? '');
     $no_hp    = trim($_POST['no_hp'] ?? '');
+    $alamat   = trim($_POST['alamat'] ?? '');
     $jenis    = $_POST['jenis_kelamin'] ?? '';
     $tanggal  = $_POST['tanggal_lahir'] ?? '';
 
     if ($nama && $email) {
-        $update = mysqli_prepare($conn, "UPDATE users SET nama_lengkap = ?, email = ?, no_hp = ?, jenis_kelamin = ?, tanggal_lahir = ? WHERE id_users = ?");
-        mysqli_stmt_bind_param($update, "sssssi", $nama, $email, $no_hp, $jenis, $tanggal, $id);
+        $update = mysqli_prepare($conn, "UPDATE users SET nama_lengkap = ?, email = ?, no_hp = ?, alamat = ?, jenis_kelamin = ?, tanggal_lahir = ? WHERE id_users = ?");
+        mysqli_stmt_bind_param($update, "ssssssi", $nama, $email, $no_hp, $alamat, $jenis, $tanggal, $id);
         $success = mysqli_stmt_execute($update) ? "✅ Profil berhasil diperbarui." : "❌ Gagal memperbarui profil.";
         mysqli_stmt_close($update);
     } else {
@@ -49,32 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="UTF-8">
   <title>Edit Profil - Buketminiku</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(to right, #e0eafc, #cfdef3);
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .card {
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .btn-save {
-      background-color: #4facfe;
-      color: white;
-      border: none;
-    }
-    .btn-save:hover {
-      opacity: 0.9;
-    }
-    .btn-back {
-      border: 1px solid #4facfe;
-      color: #4facfe;
-    }
-    .btn-back:hover {
-      background-color: #4facfe;
-      color: white;
-    }
-  </style>
+  <link rel="stylesheet" href="../../assets/css/profil.css">
 </head>
 <body>
   <div class="container py-5">
@@ -101,6 +77,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="mb-3">
               <label class="form-label">No HP</label>
               <input type="text" name="no_hp" class="form-control" value="<?= htmlspecialchars($user['no_hp']) ?>">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Alamat</label>
+              <textarea name="alamat" class="form-control" rows="3"><?= htmlspecialchars($user['alamat']) ?></textarea>
             </div>
             <div class="mb-3">
               <label class="form-label">Jenis Kelamin</label>

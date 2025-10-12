@@ -36,87 +36,7 @@ $result = mysqli_stmt_get_result($stmt);
   <meta charset="UTF-8">
   <title>Katalog Produk</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: #f8f9fa;
-    }
-    .sidebar-wrapper {
-      transition: all 0.3s ease;
-    }
-    .sidebar {
-      height: 100vh;
-      background-color: #ffffff;
-      border-right: 1px solid #dee2e6;
-      padding-top: 30px;
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 250px;
-      z-index: 1000;
-      overflow-y: auto;
-    }
-    .sidebar a {
-      display: block;
-      padding: 12px 20px;
-      color: #333;
-      text-decoration: none;
-      border-radius: 6px;
-      margin-bottom: 8px;
-    }
-    .sidebar a:hover, .sidebar a.active {
-      background-color: #e9ecef;
-      font-weight: bold;
-    }
-    .sidebar-toggle {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 1100;
-      background-color: #ff6ec4;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 18px;
-    }
-    .produk-card {
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: 0.3s;
-    }
-    .produk-card:hover {
-      transform: scale(1.02);
-    }
-    .produk-img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 12px 12px 0 0;
-    }
-    .btn-beli {
-      background-color: #ff6ec4;
-      color: white;
-      border: none;
-    }
-    .btn-beli:hover {
-      background-color: #ff4fa8;
-    }
-    .produk-deskripsi {
-      font-size: 0.9rem;
-      color: #555;
-      min-height: 60px;
-    }
-    .content-area {
-      margin-left: 250px;
-      transition: margin-left 0.3s ease;
-    }
-    .sidebar-hidden .sidebar {
-      left: -250px;
-    }
-    .sidebar-hidden .content-area {
-      margin-left: 0;
-    }
-  </style>
+  <link rel="stylesheet" href="../../assets/css/main.css">
 </head>
 <body>
 
@@ -139,7 +59,7 @@ $result = mysqli_stmt_get_result($stmt);
     <a href="keranjang.php">🛒 Keranjang</a>
     <a href="riwayat.php">📦 Riwayat</a>
     <a href="home_login.php">🏠 Home</a>
-    <a href="../../auth/logout.php" class="text-danger" onclick="return confirm('Yakin ingin logout?')">🔓 Logout</a>
+    <a href="../../controllers/logout.php" class="text-danger" onclick="return confirm('Yakin ingin logout?')">🔓 Logout</a>
   </div>
 </div>
 

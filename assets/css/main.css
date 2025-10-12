@@ -1,0 +1,246 @@
+/* Bootstrap Pink Theme Overrides */
+:root {
+  --bs-primary: #f06292;
+  --bs-primary-rgb: 240, 98, 146;
+  --bs-link-color: #f06292;
+  --bs-link-hover-color: #d81b60;
+  --bs-success: #f8d7da; /* Light pink for success */
+  --bs-success-rgb: 248, 215, 218;
+  --bs-info: #d1ecf1; /* Soft pinkish */
+  --bs-info-rgb: 209, 236, 241;
+}
+
+/* Font & Body */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff;
+  color: #000;
+}
+
+/* Navbar */
+.navbar-brand {
+  font-weight: bold;
+  color: #f06292;
+}
+.navbar-nav .nav-link {
+  color: #555;
+}
+.navbar-nav .nav-link:hover {
+  color: #f06292;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(to right, #f8cdda, #fbc2eb);
+  padding: 80px 20px;
+  color: white;
+  text-align: center;
+}
+.hero h1 {
+  font-size: 2.5rem;
+}
+.hero p {
+  font-size: 1.2rem;
+}
+
+/* Produk Card */
+.produk-card img {
+  height: 200px;
+  object-fit: cover;
+}
+.produk-card .card-body {
+  text-align: center;
+}
+.produk-card .card-title {
+  font-weight: bold;
+  color: #f06292;
+}
+
+/* Auth page styles */
+.auth-bg {
+  background: linear-gradient(to right, #fdfbfb, #ebedee);
+}
+.login-bg {
+  background: linear-gradient(to right, #ffc0cb, #ff69b4);
+}
+.card {
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.btn-pink {
+  background: linear-gradient(to right, #ff7e5f, #ff6ec4);
+  color: white;
+  border: none;
+}
+.btn-pink:hover {
+  opacity: 0.9;
+}
+
+/* Katalog page styles */
+body {
+  background-color: #f8f9fa;
+}
+.sidebar-wrapper {
+  transition: all 0.3s ease;
+}
+.sidebar {
+  height: 100vh;
+  background-color: #ffffff;
+  border-right: 1px solid #dee2e6;
+  padding-top: 30px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 250px;
+  z-index: 1000;
+  overflow-y: auto;
+}
+.sidebar a {
+  display: block;
+  padding: 12px 20px;
+  color: #333;
+  text-decoration: none;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+.sidebar a:hover, .sidebar a.active {
+  background-color: #e9ecef;
+  font-weight: bold;
+}
+.sidebar-toggle {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1100;
+  background-color: #ff6ec4;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 18px;
+}
+.produk-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+.produk-card:hover {
+  transform: scale(1.02);
+}
+.produk-card .produk-img {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 10px 10px 0 0;
+  display: block;
+}
+
+.btn-beli {
+  background-color: #ff6ec4;
+  color: white;
+  border: none;
+}
+.btn-beli:hover {
+  background-color: #ff4fa8;
+}
+.produk-deskripsi {
+  font-size: 0.9rem;
+  color: #555;
+  min-height: 60px;
+}
+.content-area {
+  margin-left: 250px;
+  transition: margin-left 0.3s ease;
+}
+.sidebar-hidden .sidebar {
+  left: -250px;
+}
+.sidebar-hidden .content-area {
+  margin-left: 0;
+}
+
+/* Keranjang page styles */
+.card-product {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.img-thumb {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.btn-hapus {
+  font-size: 0.85rem;
+}
+.summary-box {
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 20px;
+}
+
+/* Checkout page styles */
+.btn-upload-green {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+}
+.btn-upload-green:hover {
+  opacity: 0.9;
+}
+
+/* Dashboard pelanggan page styles */
+.card-summary { border-radius: 12px; background-color: #fff; }
+.badge-status { font-size: 0.9rem; }
+
+/* Riwayat page styles */
+.card-transaksi {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.bukti-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+.produk-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Upload foto page styles */
+.btn-upload-blue {
+  background-color: #00c6ff;
+  color: white;
+  border: none;
+}
+.btn-upload-blue:hover {
+  opacity: 0.9;
+}
+
+/* Tombol Outline Pink */
+.btn-outline-pink {
+  border: 1px solid #f06292;
+  color: #f06292;
+}
+.btn-outline-pink:hover {
+  background-color: #f06292;
+  color: white;
+}
+.text-pink {
+  color: #f06292;
+}
+
+/* Override for black text on specific classes */
+.text-primary {
+  color: #000 !important;
+}
+.text-success {
+  color: #000 !important;
+}

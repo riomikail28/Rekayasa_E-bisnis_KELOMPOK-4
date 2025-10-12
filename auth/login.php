@@ -32,26 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
   <meta charset="UTF-8">
   <title>Login - Buketminiku</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(to right, #ffecd2, #fcb69f);
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .card {
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .btn-pink {
-      background: linear-gradient(to right, #ff7e5f, #ff6ec4);
-      color: white;
-      border: none;
-    }
-    .btn-pink:hover {
-      opacity: 0.9;
-    }
-  </style>
+  <link rel="stylesheet" href="../assets/css/main.css">
 </head>
-<body>
+<body class="login-bg">
   <div class="container py-5">
     <div class="row justify-content-center">
       <div class="col-md-6">

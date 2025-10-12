@@ -71,6 +71,24 @@ while ($row = mysqli_fetch_assoc($q4)) {
 
   <h5 class="mb-3">📈 Grafik Penjualan per Bulan</h5>
   <canvas id="grafikOmzet" height="100"></canvas>
+
+  <h5 class="mb-3 mt-4">📊 Tabel Penjualan per Bulan</h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Bulan</th>
+        <th>Omzet (Rp)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php for ($i = 0; $i < count($labels); $i++): ?>
+        <tr>
+          <td><?php echo htmlspecialchars($labels[$i]); ?></td>
+          <td>Rp <?php echo number_format($data[$i], 0, ',', '.'); ?></td>
+        </tr>
+      <?php endfor; ?>
+    </tbody>
+  </table>
 </div>
 
 <script>

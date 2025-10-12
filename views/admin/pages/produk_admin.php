@@ -27,7 +27,7 @@ $produk = getAllProduk(); // Ambil dari tb_produk
         <tbody>
           <?php foreach ($produk as $p): ?>
             <?php
-              $gambarPath = $p['gambar'] ? "/Rekayasa-E-bisnis_KELOMPOK-4/uploads/{$p['gambar']}" : "/Rekayasa-E-bisnis_KELOMPOK-4/assets/default.png";
+              $gambarPath = $p['gambar'] ? "../../uploads/{$p['gambar']}" : "../../assets/default.png";
               $deskripsi = strlen($p['deskripsi']) > 60 ? substr($p['deskripsi'], 0, 60) . '...' : $p['deskripsi'];
             ?>
             <tr>

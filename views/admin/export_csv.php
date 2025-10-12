@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../../config/koneksi.php';
+require_once __DIR__ . '/../../config/koneksi.php';
 
 // Validasi akses admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
