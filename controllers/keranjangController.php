@@ -58,3 +58,40 @@ function kosongkanKeranjang($id_user) {
     mysqli_stmt_close($stmt);
     return $success;
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tambah_keranjang'])) {
+    session_start();
+    $id_user = $_SESSION['id_users'] ?? null;
+    $id_produk = $_POST['id_produk'] ?? null;
+    $jumlah = $_POST['jumlah'] ?? 1;
+    $redirect = $_POST['redirect'] ?? '';
+    header('Content-Type: application/json');
+    if ($id_user && $id_produk) {
+        $success = tambahKeKeranjang($id_user, $id_produk, $jumlah);
+        if ($success) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'msg' => 'Gagal menambah ke keranjang']);
+        }
+    } else {
+        echo json_encode(['success' => false, 'msg' => 'Gagal menambah ke keranjang']);
+    }
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_jumlah') {
+    session_start();
+    $id_keranjang = $_POST['id_keranjang'] ?? null;
+    $jumlah = $_POST['jumlah'] ?? null;
+    if ($id_keranjang && $jumlah && $jumlah > 0) {
+        global $conn;
+        $stmt = mysqli_prepare($conn, "UPDATE keranjang SET jumlah = ? WHERE id = ?");
+        mysqli_stmt_bind_param($stmt, 'ii', $jumlah, $id_keranjang);
+        $success = mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        echo json_encode(['success' => $success]);
+    } else {
+        echo json_encode(['success' => false, 'msg' => 'Data tidak valid']);
+    }
+    exit;
+}

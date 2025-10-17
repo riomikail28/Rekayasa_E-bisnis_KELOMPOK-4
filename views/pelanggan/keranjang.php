@@ -1,4 +1,7 @@
 <?php
+// File ini sudah dipindahkan ke checkout.php
+// Silakan gunakan views/pelanggan/checkout.php untuk fitur keranjang dan checkout
+
 session_start();
 require_once __DIR__ . '/../../controllers/keranjangController.php';
 
@@ -33,6 +36,9 @@ $total_belanja = 0;
           <a class="nav-link" href="home_login.php">🏠 Home</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="katalog.php">🛍️ Katalog</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="keranjang.php">🛒 Keranjang</a>
         </li>
         <li class="nav-item">
@@ -47,7 +53,7 @@ $total_belanja = 0;
 </nav>
 
 <div class="container py-5">
-  <h3 class="fw-bold mb-4 text-center text-primary">🛒 Keranjang Belanja</h3>
+  <h3 class="fw-bold mb-4 text-center text-primary"><span style="font-size:2rem">🛒</span> Keranjang Belanja</h3>
 
   <?php if (isset($_GET['msg'])): ?>
     <div class="alert alert-info text-center"><?= htmlspecialchars($_GET['msg']) ?></div>
@@ -55,73 +61,53 @@ $total_belanja = 0;
 
   <?php if (count($keranjang) > 0): ?>
     <div class="row">
-      <div class="col-lg-8">
-        <?php foreach ($keranjang as $item): 
-          $subtotal = $item['jumlah'] * $item['harga'];
-          $total_belanja += $subtotal;
-        ?>
-        <div class="card mb-3 card-product">
-          <div class="row g-0 align-items-center">
-            <div class="col-md-2 text-center p-2">
-              <img src="../../uploads/<?= htmlspecialchars($item['gambar']) ?>" 
-                   alt="<?= htmlspecialchars($item['nama_produk']) ?>" 
-                   class="img-thumb" 
-                   onerror="this.src='../../uploads/default.jpg'" />
-            </div>
-            <div class="col-md-6">
-              <div class="card-body">
-                <h5 class="card-title mb-1"><?= htmlspecialchars($item['nama_produk']) ?></h5>
-                <p class="card-text text-muted mb-0">Rp<?= number_format($item['harga']) ?> / item</p>
-                <small class="text-muted">Jumlah: <?= $item['jumlah'] ?> pcs</small>
-              </div>
-            </div>
-            <div class="col-md-2 text-center">
-              <p class="fw-semibold mb-1 text-success">Rp<?= number_format($subtotal) ?></p>
-            </div>
-            <div class="col-md-2 text-center">
-              <a href="../../controllers/hapus_item.php?id=<?= $item['id_keranjang'] ?>" 
-                 class="btn btn-sm btn-outline-danger btn-hapus" 
-                 onclick="return confirm('Yakin ingin hapus item ini?')">Hapus</a>
-            </div>
-          </div>
+      <div class="col-lg-10 mx-auto">
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle" style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px #eee;">
+            <thead class="table-light">
+              <tr>
+                <th>Gambar</th>
+                <th>Produk</th>
+                <th>Harga</th>
+                <th>Jumlah</th>
+                <th>Subtotal</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($keranjang as $item): 
+                $subtotal = $item['jumlah'] * $item['harga'];
+                $total_belanja += $subtotal;
+              ?>
+              <tr>
+                <td class="text-center"><img src="../../uploads/<?= htmlspecialchars($item['gambar']) ?>" alt="<?= htmlspecialchars($item['nama_produk']) ?>" style="width:60px;height:60px;object-fit:cover;border-radius:8px;box-shadow:0 0 8px #eee;" onerror="this.src='../../uploads/default.jpg'" /></td>
+                <td><?= htmlspecialchars($item['nama_produk']) ?></td>
+                <td>Rp<?= number_format($item['harga']) ?></td>
+                <td>
+                  <div class="input-group input-group-sm justify-content-center" style="max-width:120px;">
+                    <button class="btn btn-outline-pink btn-minus" data-id="<?= $item['id_keranjang'] ?>" type="button">-</button>
+                    <input type="text" class="form-control text-center jumlah-input" value="<?= $item['jumlah'] ?>" data-id="<?= $item['id_keranjang'] ?>" style="width:40px;">
+                    <button class="btn btn-outline-pink btn-plus" data-id="<?= $item['id_keranjang'] ?>" type="button">+</button>
+                  </div>
+                </td>
+                <td class="fw-semibold text-success">Rp<?= number_format($subtotal) ?></td>
+                <td><a href="../../controllers/hapus_item.php?id=<?= $item['id_keranjang'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Yakin ingin hapus item ini?')">Hapus</a></td>
+              </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
         </div>
-        <?php endforeach; ?>
         <div class="text-end mt-3">
-        <h5 class="fw-bold">Total Belanja: <span class="text-success">Rp<?= number_format($total_belanja) ?></span></h5>
-      </div>
-
-      </div>
-
-      <div class="col-lg-4">
-              <div class="summary-box">
-                <form method="POST" action="../../controllers/checkoutController.php">
-        <?php foreach ($keranjang as $item): ?>
-          <input type="hidden" name="id_produk[]" value="<?= $item['id_produk'] ?>">
-          <input type="hidden" name="jumlah[]" value="<?= $item['jumlah'] ?>">
-        <?php endforeach; ?>
-
-        <div class="mb-3">
-          <label for="pengiriman" class="form-label">Metode Pengiriman</label>
-          <select name="pengiriman" id="pengiriman" class="form-select" required>
-            <option value="">-- Pilih Pengiriman --</option>
-            <option value="GoSend">GoSend</option>
-            <option value="GrabExpress">GrabExpress</option>
-            <option value="Shopee Instant">Shopee Instant</option>
-          </select>
+          <h5 class="fw-bold">Total Belanja: <span class="text-success">Rp<?= number_format($total_belanja) ?></span></h5>
         </div>
-
-        <div class="mb-3">
-          <label for="pembayaran" class="form-label">Metode Pembayaran</label>
-          <select name="pembayaran" id="pembayaran" class="form-select" required>
-            <option value="">-- Pilih Pembayaran --</option>
-            <option value="Transfer BCA">Transfer BCA</option>
-            <option value="Transfer BNI">Transfer BNI</option>
-            <option value="COD">COD (Bayar di tempat)</option>
-          </select>
-        </div>
-
-        <button type="submit" class="btn btn-success w-100">Lanjut ke Checkout</button>
-      </form>
+        <div class="text-end mt-4">
+          <form method="POST" action="checkout.php">
+            <?php foreach ($keranjang as $item): ?>
+              <input type="hidden" name="id_produk[]" value="<?= $item['id_produk'] ?>">
+              <input type="hidden" name="jumlah[]" value="<?= $item['jumlah'] ?>" class="hidden-jumlah" data-id="<?= $item['id_keranjang'] ?>">
+            <?php endforeach; ?>
+            <button type="submit" class="btn btn-success btn-lg">Checkout</button>
+          </form>
         </div>
       </div>
     </div>
@@ -129,6 +115,87 @@ $total_belanja = 0;
     <div class="alert alert-info text-center">Keranjang kamu masih kosong. Yuk, belanja dulu di <a href="katalog.php">katalog</a>!</div>
   <?php endif; ?>
 </div>
+
+<script>
+// Fitur -+ jumlah produk di keranjang
+const minusBtns = document.querySelectorAll('.btn-minus');
+const plusBtns = document.querySelectorAll('.btn-plus');
+const jumlahInputs = document.querySelectorAll('.jumlah-input');
+
+function updateJumlah(id, jumlah, input) {
+  fetch('../../controllers/keranjangController.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `action=update_jumlah&id_keranjang=${id}&jumlah=${jumlah}`
+  }).then(res => res.json()).then(data => {
+    if (data.success) {
+      // Update subtotal dan total belanja di frontend
+      const harga = parseInt(input.closest('tr').querySelector('td:nth-child(3)').textContent.replace(/[^\d]/g, ''));
+      const subtotalCell = input.closest('tr').querySelector('td:nth-child(5)');
+      const newSubtotal = harga * jumlah;
+      subtotalCell.textContent = 'Rp' + newSubtotal.toLocaleString();
+      // Update total belanja
+      let total = 0;
+      document.querySelectorAll('.jumlah-input').forEach(inp => {
+        const row = inp.closest('tr');
+        const harga = parseInt(row.querySelector('td:nth-child(3)').textContent.replace(/[^\d]/g, ''));
+        const jumlah = parseInt(inp.value);
+        total += harga * jumlah;
+      });
+      document.querySelector('.text-end.mt-3 h5 span').textContent = 'Rp' + total.toLocaleString();
+    } else {
+      alert('Gagal update jumlah!');
+    }
+  });
+}
+
+function syncHiddenJumlah(id, jumlah) {
+  const hiddenInput = document.querySelector('.hidden-jumlah[data-id="'+id+'"]');
+  if (hiddenInput) hiddenInput.value = jumlah;
+}
+
+minusBtns.forEach(btn => {
+  btn.addEventListener('click', function() {
+    const id = this.dataset.id;
+    const input = document.querySelector('.jumlah-input[data-id="'+id+'"]');
+    let val = parseInt(input.value);
+    if (val > 1) {
+      val--;
+      input.value = val;
+      updateJumlah(id, val, input);
+      syncHiddenJumlah(id, val);
+    }
+  });
+});
+plusBtns.forEach(btn => {
+  btn.addEventListener('click', function() {
+    const id = this.dataset.id;
+    const input = document.querySelector('.jumlah-input[data-id="'+id+'"]');
+    let val = parseInt(input.value);
+    val++;
+    input.value = val;
+    updateJumlah(id, val, input);
+    syncHiddenJumlah(id, val);
+  });
+});
+jumlahInputs.forEach(input => {
+  input.addEventListener('change', function() {
+    const id = this.dataset.id;
+    let val = parseInt(this.value);
+    if (val > 0) {
+      updateJumlah(id, val, this);
+      syncHiddenJumlah(id, val);
+    }
+  });
+});
+</script>
+<style>
+.btn-outline-pink { border-color:#ff4d7e;color:#ff4d7e; }
+.btn-outline-pink:hover { background:#ff4d7e;color:#fff; }
+.btn-success.btn-lg { font-size:1.2rem;padding:0.7rem 2.5rem;border-radius:8px; }
+.table-bordered th, .table-bordered td { vertical-align:middle; }
+.table-bordered { border-radius:12px; overflow:hidden; }
+</style>
 
 </body>
 </html>

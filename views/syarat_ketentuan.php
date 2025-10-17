@@ -29,6 +29,7 @@ if (session_status() === PHP_SESSION_NONE) {
             </a>
             <ul class="dropdown-menu" aria-labelledby="informasiDropdown">
               <li><a class="dropdown-item" href="tentang_kami.php">Tentang Kami</a></li>
+              <li><a class="dropdown-item" href="kontak_kami.php">Kontak Kami</a></li>
               <li><a class="dropdown-item" href="faq.php">FAQ</a></li>
               <li><a class="dropdown-item" href="syarat_ketentuan.php">Syarat & Ketentuan</a></li>
               <li><a class="dropdown-item" href="kebijakan_privasi.php">Kebijakan Privasi</a></li>

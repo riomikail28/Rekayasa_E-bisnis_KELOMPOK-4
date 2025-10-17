@@ -23,11 +23,11 @@ if (!isUser()) {
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
   <div class="container">
-    <a class="navbar-brand fw-bold text-pink" href="../index.php">Buketminiku</a>
+    <a class="navbar-brand fw-bold text-pink" href="<?php echo (isset($_SESSION['role']) && $_SESSION['role'] === 'pelanggan') ? 'pelanggan/home_login.php' : '../index.php'; ?>">Buketminiku</a>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="../index.php">Beranda</a>
+            <a class="nav-link" href="<?php echo (isset($_SESSION['role']) && $_SESSION['role'] === 'pelanggan') ? 'pelanggan/home_login.php' : '../index.php'; ?>">Beranda</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="informasiDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -35,6 +35,7 @@ if (!isUser()) {
             </a>
             <ul class="dropdown-menu" aria-labelledby="informasiDropdown">
               <li><a class="dropdown-item" href="tentang_kami.php">Tentang Kami</a></li>
+              <li><a class="dropdown-item" href="kontak_kami.php">Kontak Kami</a></li>
               <li><a class="dropdown-item" href="faq.php">FAQ</a></li>
               <li><a class="dropdown-item" href="syarat_ketentuan.php">Syarat & Ketentuan</a></li>
               <li><a class="dropdown-item" href="kebijakan_privasi.php">Kebijakan Privasi</a></li>

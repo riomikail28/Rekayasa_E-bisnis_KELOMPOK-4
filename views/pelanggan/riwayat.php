@@ -33,7 +33,7 @@ $transaksi = mysqli_fetch_all($result, MYSQLI_ASSOC);
 <div class="sidebar-wrapper">
   <div class="sidebar">
     <div class="text-center mb-4"><h4 class="fw-bold text-primary">Buketminiku</h4></div>
-    <a href="katalog.php">🏠 Katalog</a>
+    <a href="katalog.php">🛍️ Katalog</a>
     <a href="keranjang.php">🛒 Keranjang</a>
     <a href="riwayat.php" class="active">📦 Riwayat</a>
     <a href="home_login.php">🏠 Home</a>

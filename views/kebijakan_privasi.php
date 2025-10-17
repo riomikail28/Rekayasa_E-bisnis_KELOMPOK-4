@@ -29,6 +29,7 @@ if (session_status() === PHP_SESSION_NONE) {
             </a>
             <ul class="dropdown-menu" aria-labelledby="informasiDropdown">
               <li><a class="dropdown-item" href="tentang_kami.php">Tentang Kami</a></li>
+              <li><a class="dropdown-item" href="kontak_kami.php">Kontak Kami</a></li>
               <li><a class="dropdown-item" href="faq.php">FAQ</a></li>
               <li><a class="dropdown-item" href="syarat_ketentuan.php">Syarat & Ketentuan</a></li>
               <li><a class="dropdown-item" href="kebijakan_privasi.php">Kebijakan Privasi</a></li>
@@ -109,7 +110,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <!-- Footer -->
 <footer class="text-center py-3 mt-5" style="background-color: #ffb6c1;">
-  &copy; 2025 BuketMinku | WhatsApp: 0812-XXXX-XXXX | Instagram: @buketminka.id
+  &copy; 2025 BuketMiniku | WhatsApp: 0812-XXXX-XXXX | Instagram: @BuketMiniku.id
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

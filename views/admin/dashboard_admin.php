@@ -24,6 +24,10 @@ $adminPages = [
     'admin_transaksi',
     'validasi_transaksi',
     'dashboard_analytics',
+    'pengaturan_website',
+    'laporan_keuangan',
+    'manajemen_pengiriman',
+    'manajemen_stok',
 ];
 
 $page = $_GET['page'] ?? 'produk_admin';
@@ -46,9 +50,13 @@ $page = $_GET['page'] ?? 'produk_admin';
       <li class="nav-item"><a class="nav-link <?= $page === 'produk_admin' ? 'active' : '' ?>" href="dashboard_admin.php?page=produk_admin">📦 Kelola Produk</a></li>
       <li class="nav-item"><a class="nav-link <?= $page === 'tambah_produk' ? 'active' : '' ?>" href="dashboard_admin.php?page=tambah_produk">➕ Tambah Produk</a></li>
       <li class="nav-item"><a class="nav-link <?= $page === 'laporan_penjualan' ? 'active' : '' ?>" href="dashboard_admin.php?page=laporan_penjualan">📊 Laporan Penjualan</a></li>
-      <li class="nav-item"><a class="nav-link <?= $page === 'dashboard_analytics' ? 'active' : '' ?>" href="dashboard_admin.php?page=dashboard_analytics">📋 Analitik Dashboard</a></li>
+      <li class="nav-item"><a class="nav-link <?= $page === 'dashboard_analytics' ? 'active' : '' ?>" href="dashboard_admin.php?page=dashboard_analytics">📈 Analitik Dashboard</a></li>
       <li class="nav-item"><a class="nav-link <?= $page === 'daftar_customer' ? 'active' : '' ?>" href="dashboard_admin.php?page=daftar_customer">👥 Daftar Customer</a></li>
       <li class="nav-item"><a class="nav-link <?= $page === 'admin_transaksi' ? 'active' : '' ?>" href="dashboard_admin.php?page=admin_transaksi">📦 Validasi Transaksi</a></li>
+      <li class="nav-item"><a class="nav-link <?= $page === 'pengaturan_website' ? 'active' : '' ?>" href="dashboard_admin.php?page=pengaturan_website">⚙️ Pengaturan Website</a></li>
+      <li class="nav-item"><a class="nav-link <?= $page === 'laporan_keuangan' ? 'active' : '' ?>" href="dashboard_admin.php?page=laporan_keuangan">💰 Laporan Keuangan</a></li>
+      <li class="nav-item"><a class="nav-link <?= $page === 'manajemen_pengiriman' ? 'active' : '' ?>" href="dashboard_admin.php?page=manajemen_pengiriman">🚚 Manajemen Pengiriman</a></li>
+      <li class="nav-item"><a class="nav-link <?= $page === 'manajemen_stok' ? 'active' : '' ?>" href="dashboard_admin.php?page=manajemen_stok">📦 Manajemen Stok</a></li>
       <li class="nav-item"><a class="nav-link text-danger" href="../../controllers/Logout.php">🚪 Logout</a></li>
     </ul>
   </div>

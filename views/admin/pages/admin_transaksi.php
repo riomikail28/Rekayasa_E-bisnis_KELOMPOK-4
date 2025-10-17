@@ -4,10 +4,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Ambil semua transaksi yang statusnya 'dibayar'
-$query = "SELECT t.*, u.username FROM transaksi t 
-          JOIN users u ON t.id_user = u.id_users 
-          WHERE t.status IN ('pending', 'checkout') 
+// Ambil semua transaksi yang statusnya 'pending' (menunggu validasi)
+$query = "SELECT t.*, u.username, p.biaya AS biaya_pengiriman FROM transaksi t
+          JOIN users u ON t.id_user = u.id_users
+          LEFT JOIN tb_pengiriman p ON t.metode_pengiriman = p.nama_pengiriman
+          WHERE t.status = 'pending'
           ORDER BY t.tgl_transaksi DESC";
 
 $result = mysqli_query($conn, $query);

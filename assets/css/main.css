@@ -17,6 +17,64 @@ body {
   color: #000;
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
+  .produk-card img {
+    height: 150px;
+  }
+  .sidebar {
+    width: 200px;
+  }
+  .content-area {
+    margin-left: 200px;
+  }
+  .sidebar-hidden .content-area {
+    margin-left: 0;
+  }
+  .navbar-toggler {
+    display: block;
+  }
+  .collapse.navbar-collapse {
+    display: none;
+  }
+  .collapse.show.navbar-collapse {
+    display: block;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero {
+    padding: 40px 10px;
+  }
+  .produk-card img {
+    height: 120px;
+  }
+  .sidebar {
+    width: 180px;
+  }
+  .content-area {
+    margin-left: 180px;
+  }
+  .sidebar-hidden .content-area {
+    margin-left: 0;
+  }
+  .btn {
+    font-size: 0.9rem;
+  }
+  .card-body h5 {
+    font-size: 1rem;
+  }
+  .card-body p {
+    font-size: 0.9rem;
+  }
+}
+
 /* Navbar */
 .navbar-brand {
   font-weight: bold;
@@ -244,3 +302,5 @@ body {
 .text-success {
   color: #000 !important;
 }
+.btn-pink { background:#f06292; color:#fff; border:none; }
+.btn-pink:hover { background:#d81b60; color:#fff; }
