@@ -39,9 +39,9 @@ $result = mysqli_query($conn, $query);
   <meta charset="UTF-8">
   <title>Laporan Penjualan</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../../assets/css/admin.css">
+  <link rel="stylesheet" href="../../../assets/css/admin.css?v=2">
 </head>
-<body class="bg-light">
+<body class="bg-light" style="background: #f06292;">
 <div class="container py-4">
   <h3 class="fw-bold mb-4">📊 Laporan Penjualan</h3>
 
@@ -105,3 +105,4 @@ $result = mysqli_query($conn, $query);
 </div>
 </body>
 </html>
+

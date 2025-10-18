@@ -40,6 +40,18 @@ foreach ($id_produk_list as $i => $id_produk) {
     ];
 }
 
+// Hitung biaya pengiriman
+$biaya_pengiriman = 0;
+require_once '../models/pengirimanModel.php';
+$biaya_pengiriman_list = getBiayaPengiriman();
+foreach ($biaya_pengiriman_list as $p) {
+    if ($p['nama_pengiriman'] == $pengiriman) {
+        $biaya_pengiriman = $p['biaya'];
+        break;
+    }
+}
+$total_belanja += $biaya_pengiriman;
+
 if (empty($produk_data)) {
     header("Location: ../views/pelanggan/keranjang.php?msg=Produk tidak valid");
     exit;
@@ -73,3 +85,4 @@ mysqli_stmt_close($stmt);
 // Redirect ke keranjang dengan pesan sukses
 header("Location: ../views/pelanggan/keranjang.php?msg=Checkout berhasil! Silakan tunggu konfirmasi admin.");
 exit;
+

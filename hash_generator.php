@@ -5,3 +5,4 @@ $hash = password_hash($password, PASSWORD_DEFAULT);
 echo "Password asli: " . $password . "<br>";
 echo "Hash-nya: " . $hash;
 ?>
+

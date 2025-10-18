@@ -30,3 +30,4 @@ if ($stmt) {
 }
 
 echo "<script>setTimeout(() => window.location.href='dashboard_admin.php?page=admin_transaksi', 2000);</script>";
+

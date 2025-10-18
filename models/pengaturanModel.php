@@ -31,3 +31,4 @@ function getSetting($nama_setting) {
     return $row ? $row['nilai'] : null;
 }
 ?>
+

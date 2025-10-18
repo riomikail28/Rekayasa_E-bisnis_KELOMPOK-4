@@ -18,3 +18,4 @@ function getUserById($id_user) {
     $result = mysqli_stmt_get_result($stmt);
     return mysqli_fetch_assoc($result);
 }
+

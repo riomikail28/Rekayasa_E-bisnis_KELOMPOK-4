@@ -1,19 +1,36 @@
-# TODO: Update ERP Backend Features
+# Admin Dashboard Update Plan
 
 ## Overview
-Update the BuketMiniku e-commerce ERP backend with new admin features: Website Settings Management, Financial Reports, Analytics & Statistics, Shipping Management, and Stock Management.
+Update the admin dashboard to resemble SB Admin Pro template with modern design, top navbar, collapsible sidebar, and overview cards.
 
-## Steps
-- [x] Update views/admin/dashboard_admin.php: Add new page names to $adminPages array and add sidebar links for the new main pages (pengaturan_website, laporan_keuangan, analitik_statistik, manajemen_pengiriman, manajemen_stok).
-- [x] Create models/pengaturanModel.php: Functions for getting and updating website settings (general, logo, favicon, contact info).
-- [x] Create models/pengirimanModel.php: Functions for CRUD operations on shipping data (shipments, costs).
-- [x] Create models/stokModel.php: Functions for CRUD operations on stock data (integrate with products if needed).
-- [x] Create controllers/pengaturanController.php: Handle POST requests for updating settings.
-- [x] Create controllers/pengirimanController.php: Handle CRUD for shipping.
-- [x] Create controllers/stokController.php: Handle CRUD for stock.
-- [x] Create views/admin/pages/pengaturan_website.php: Main page with tabs for Pengaturan Umum, Logo, Favicon, Informasi Kontak.
-- [x] Create views/admin/pages/laporan_keuangan.php: Main page with sections for Daftar Laporan Keuangan, Laporan Pendapatan, Laporan Pengeluaran.
-- [x] Create views/admin/pages/analitik_statistik.php: Expand analytics with Laporan Pengunjung, Laporan Penjualan, Laporan Produk Terlaris.
-- [x] Create views/admin/pages/manajemen_pengiriman.php: List shipments with add/edit/delete, include Biaya Pengiriman.
-- [x] Create views/admin/pages/manajemen_stok.php: List stock with add/edit/delete, low stock warnings.
-- [x] Test new pages by accessing admin dashboard and verifying functionality.
+## Steps to Complete
+
+### 1. Update dashboard_admin.php
+- [x] Add top navbar with user dropdown and sidebar toggle button
+- [x] Make sidebar collapsible with modern design
+- [x] Add overview cards showing key metrics (total products, customers, transactions, revenue) when on default page
+- [x] Ensure responsive layout
+
+### 2. Update admin.css
+- [x] Enhance CSS for modern styling (colors, shadows, transitions)
+- [x] Add styles for top navbar
+- [x] Update sidebar styles for collapsible functionality
+- [x] Style overview cards
+
+### 3. Test Changes
+- [x] Verify sidebar toggle functionality
+- [x] Check responsive design on different screen sizes
+- [x] Ensure all links work correctly
+- [x] Test overview cards display correct data
+- [x] Fix database column name error (total_harga -> total)
+- [x] Change background color to pink theme
+- [x] Fix sidebar hide button functionality
+- [x] Add sidebar show button when collapsed
+
+## Dependent Files
+- views/admin/dashboard_admin.php
+- assets/css/admin.css
+
+## Followup Steps
+- [ ] Run the application and navigate to admin dashboard
+- [ ] Verify all features work as expected

@@ -17,3 +17,4 @@ mysqli_stmt_close($stmt);
 
 header("Location: ../views/pelanggan/keranjang.php?msg=Item berhasil dihapus");
 exit;
+

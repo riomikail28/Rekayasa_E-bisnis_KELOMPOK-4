@@ -22,7 +22,7 @@ $result = mysqli_query($conn, "SELECT * FROM produk ORDER BY id DESC LIMIT 4");
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>BuketMiniku | Dashboard</title>
+  <title>Bucketminiku | Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/css/main.css">
   <link rel="stylesheet" href="../../assets/css/profil.css">
@@ -39,41 +39,12 @@ $result = mysqli_query($conn, "SELECT * FROM produk ORDER BY id DESC LIMIT 4");
 </head>
 <body class="bg-light">
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-  <div class="container">
-    <a class="navbar-brand fw-bold text-pink" href="home_login.php">Buketminiku</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="home_login.php">Beranda</a></li>
-          <li class="nav-item"><a class="nav-link" href="katalog.php">Katalog</a></li>
-          <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
-          <li class="nav-item"><a class="nav-link" href="riwayat.php">Riwayat</a></li>
-          <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
-          <?php if (isset($_SESSION['role'])): ?>
-            <li class="nav-item">
-              <a class="btn btn-outline-danger" href="../../controllers/logout.php">Logout</a>
-            </li>
-          <?php else: ?>
-            <li class="nav-item">
-              <a class="btn btn-outline-pink me-2" href="../../auth/login.php">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="btn btn-pink" href="../../auth/registrasi.php">Daftar</a>
-            </li>
-          <?php endif; ?>
-        </ul>
-    </div>
-  </div>
-</nav>
+<?php include '../partials/navbar_customer.php'; ?>
 
 <!-- Hero Section -->
 <section class="hero" style="background: linear-gradient(90deg, #fff0f3 0%, #f06292 100%); padding: 40px 0;">
   <div class="container">
-    <h1 class="display-5 fw-bold">Selamat Datang di BuketMiniku</h1>
+    <h1 class="display-5 fw-bold">Selamat Datang di Bucketminiku</h1>
     <p class="lead">Toko bunga dan hadiah untuk momen spesialmu. Kirim cinta lewat buket yang bermakna.</p>
     <a href="#produk" class="btn btn-light btn-lg mt-3">Lihat Produk</a>
   </div>
@@ -119,7 +90,7 @@ $result = mysqli_query($conn, "SELECT * FROM produk ORDER BY id DESC LIMIT 4");
           <div class="mb-2"><span style="font-size:2rem; color:#ff4d7e;">&#128218;</span></div>
           <h5 class="mb-2">Tentang Kami</h5>
           <p class="mb-2">Pelajari visi dan misi perusahaan kami.</p>
-          <a href="../../views/tentang_kami.php" class="btn btn-outline-pink btn-sm">Baca Lebih Lanjut</a>
+          <a href="/Rekayasa_E-bisnis_KELOMPOK-4/views/tentang_kami.php" class="btn btn-outline-pink btn-sm">Baca Lebih Lanjut</a>
         </div>
       </div>
       <div class="col-md-3">
@@ -127,7 +98,7 @@ $result = mysqli_query($conn, "SELECT * FROM produk ORDER BY id DESC LIMIT 4");
           <div class="mb-2"><span style="font-size:2rem; color:#ff4d7e;">&#10067;</span></div>
           <h5 class="mb-2">FAQ</h5>
           <p class="mb-2">Pertanyaan umum tentang layanan kami.</p>
-          <a href="../../views/faq.php" class="btn btn-outline-pink btn-sm">Lihat FAQ</a>
+          <a href="/Rekayasa_E-bisnis_KELOMPOK-4/views/faq.php" class="btn btn-outline-pink btn-sm">Lihat FAQ</a>
         </div>
       </div>
       <div class="col-md-3">
@@ -135,7 +106,7 @@ $result = mysqli_query($conn, "SELECT * FROM produk ORDER BY id DESC LIMIT 4");
           <div class="mb-2"><span style="font-size:2rem; color:#ff4d7e;">&#127873;</span></div>
           <h5 class="mb-2">Promo</h5>
           <p class="mb-2">Daftar promo dan diskon terbaru.</p>
-          <a href="../../views/promo.php" class="btn btn-outline-pink btn-sm">Lihat Promo</a>
+          <a href="/Rekayasa_E-bisnis_KELOMPOK-4/views/promo.php" class="btn btn-outline-pink btn-sm">Lihat Promo</a>
         </div>
       </div>
       <div class="col-md-3">
@@ -143,7 +114,7 @@ $result = mysqli_query($conn, "SELECT * FROM produk ORDER BY id DESC LIMIT 4");
           <div class="mb-2"><span style="font-size:2rem; color:#ff4d7e;">&#128172;</span></div>
           <h5 class="mb-2">Testimoni</h5>
           <p class="mb-2">Ulasan dari pelanggan kami.</p>
-          <a href="../../views/testimoni.php" class="btn btn-outline-pink btn-sm">Baca Testimoni</a>
+          <a href="/Rekayasa_E-bisnis_KELOMPOK-4/views/testimoni.php" class="btn btn-outline-pink btn-sm">Baca Testimoni</a>
         </div>
       </div>
     </div>
@@ -152,7 +123,7 @@ $result = mysqli_query($conn, "SELECT * FROM produk ORDER BY id DESC LIMIT 4");
 
 <!-- Footer -->
 <footer class="text-center py-3 mt-5" style="background-color: #ffb6c1;">
-  &copy; 2025 BuketMiniku | WhatsApp: 0812-XXXX-XXXX | Instagram: @buketminiku.id
+  &copy; 2025 Bucketminiku | WhatsApp: 0812-XXXX-XXXX | Instagram: @Bucketminiku.id
 </footer>
 
 <style>
@@ -165,3 +136,4 @@ $result = mysqli_query($conn, "SELECT * FROM produk ORDER BY id DESC LIMIT 4");
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

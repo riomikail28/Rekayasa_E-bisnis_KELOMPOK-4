@@ -37,26 +37,7 @@ mysqli_stmt_close($stmt);
 </head>
 <body class="bg-light">
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
-  <div class="container">
-    <a class="navbar-brand fw-bold text-pink" href="#">BuketMinku</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="home_login.php">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="katalog.php">Katalog</a></li>
-        <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
-        <li class="nav-item"><a class="nav-link" href="riwayat.php">Riwayat</a></li>
-        <li class="nav-item"><a class="nav-link active fw-bold" href="dashboard_pelanggan.php">Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
-        <li class="nav-item"><a class="btn btn-outline-danger ms-2" href="../../controllers/Logout.php">Logout</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<?php include '../partials/navbar_customer.php'; ?>
 
 <!-- Greeting -->
 <div class="container mb-4">
@@ -120,3 +101,4 @@ mysqli_stmt_close($stmt);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

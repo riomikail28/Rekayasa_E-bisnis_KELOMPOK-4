@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto'])) {
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Upload Foto - Buketminiku</title>
+  <title>Upload Foto - Bucketminiku</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/css/main.css">
 </head>
@@ -77,3 +77,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto'])) {
   </div>
 </body>
 </html>
+

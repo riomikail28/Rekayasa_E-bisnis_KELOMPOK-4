@@ -54,3 +54,4 @@ $low_stock_alerts = getLowStockAlerts();
     </div>
   </div>
 </div>
+

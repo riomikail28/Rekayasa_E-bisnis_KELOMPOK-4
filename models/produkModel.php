@@ -35,3 +35,4 @@ function getProdukById($id_produk) {
     mysqli_stmt_close($stmt);
     return $produk;
 }
+

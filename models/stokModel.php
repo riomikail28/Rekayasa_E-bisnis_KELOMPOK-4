@@ -44,3 +44,4 @@ function getLowStockAlerts($threshold = 5) {
     return $alerts;
 }
 ?>
+

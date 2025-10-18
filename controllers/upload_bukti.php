@@ -23,3 +23,4 @@ if (move_uploaded_file($_FILES['bukti']['tmp_name'], $target)) {
 
 header("Location: ../views/pelanggan/riwayat.php?msg=Gagal menyimpan bukti");
 exit;
+

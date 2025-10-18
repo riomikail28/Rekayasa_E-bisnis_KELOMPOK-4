@@ -82,3 +82,4 @@ function loginUser($username, $password) {
 
     return $user['role'];
 }
+

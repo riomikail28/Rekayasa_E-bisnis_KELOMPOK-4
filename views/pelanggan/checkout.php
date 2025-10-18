@@ -3,6 +3,7 @@ session_start();
 require_once '../../config/koneksi.php';
 require_once '../../controllers/keranjangController.php';
 require_once '../../models/userModel.php';
+require_once '../../models/pengirimanModel.php';
 
 $id_user = $_SESSION['id_users'] ?? null;
 if (!$id_user) {
@@ -106,7 +107,7 @@ if (!$pengiriman || !$pembayaran) {
     <html lang="id">
     <head>
       <meta charset="UTF-8">
-      <title>Checkout - Buketminiku</title>
+      <title>Checkout - Bucketminiku</title>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
       <link rel="stylesheet" href="../../assets/css/main.css">
       <style>
@@ -124,7 +125,7 @@ if (!$pengiriman || !$pembayaran) {
             <div class="card checkout-card">
               <div class="gradient-header p-4 text-center">
                 <span class="icon-checkout">🛍️</span>
-                <h3 class="fw-bold mb-0">Checkout Buketminiku</h3>
+                <h3 class="fw-bold mb-0">Checkout Bucketminiku</h3>
               </div>
               <div class="card-body">
                 <div class="alert alert-danger text-center mb-4"><br>Silakan pilih metode pengiriman dan pembayaran.</div>
@@ -145,7 +146,7 @@ if (!$pengiriman || !$pembayaran) {
                       $biaya_pengiriman = getBiayaPengiriman();
                       foreach ($biaya_pengiriman as $p):
                       ?>
-                        <option value="<?= htmlspecialchars($p['nama_pengiriman']) ?>"><?= htmlspecialchars($p['nama_pengiriman']) ?> - Rp<?= number_format($p['biaya'], 0, ',', '.') ?></option>
+                        <option value="<?= htmlspecialchars($p['nama_pengiriman']) ?>" data-biaya="<?= $p['biaya'] ?>"><?= htmlspecialchars($p['nama_pengiriman']) ?> - Rp<?= number_format($p['biaya'], 0, ',', '.') ?></option>
                       <?php endforeach; ?>
                     </select>
                   </div>
@@ -168,8 +169,11 @@ if (!$pengiriman || !$pembayaran) {
                           <span class="fw-semibold"><?= htmlspecialchars($item['nama_produk']) ?></span> x <?= $item['jumlah'] ?> <span class="float-end text-success">Rp<?= number_format($item['jumlah'] * $item['harga']) ?></span>
                         </li>
                       <?php endforeach; ?>
+                      <li class="mb-1" id="shipping-line" style="display: none;">
+                        <span class="fw-semibold">Biaya Pengiriman</span> <span class="float-end text-success" id="shipping-cost">Rp0</span>
+                      </li>
                     </ul>
-                    <div class="fw-bold text-end">Total: <span class="text-success">Rp<?= number_format($total) ?></span></div>
+                    <div class="fw-bold text-end">Total: <span class="text-success" id="total-amount">Rp<?= number_format($total) ?></span></div>
                   </div>
                   <button type="submit" class="btn btn-pink w-100 py-2 fw-bold">Checkout Sekarang</button>
                 </form>
@@ -177,16 +181,46 @@ if (!$pengiriman || !$pembayaran) {
             </div>
           </div>
         </div>
-      </div>
+      <script>
+        document.getElementById('pengiriman').addEventListener('change', function() {
+          const selectedOption = this.options[this.selectedIndex];
+          const biaya = selectedOption.getAttribute('data-biaya') ? parseInt(selectedOption.getAttribute('data-biaya')) : 0;
+          const shippingLine = document.getElementById('shipping-line');
+          const shippingCost = document.getElementById('shipping-cost');
+          const totalAmount = document.getElementById('total-amount');
+          const baseTotal = <?= $total ?>;
+
+          if (biaya > 0) {
+            shippingLine.style.display = 'block';
+            shippingCost.textContent = 'Rp' + biaya.toLocaleString('id-ID');
+            totalAmount.textContent = 'Rp' + (baseTotal + biaya).toLocaleString('id-ID');
+          } else {
+            shippingLine.style.display = 'none';
+            shippingCost.textContent = 'Rp0';
+            totalAmount.textContent = 'Rp' + baseTotal.toLocaleString('id-ID');
+          }
+        });
+      </script>
     </body>
     </html>
     <?php
     exit;
 }
 
+// Hitung biaya pengiriman
+$biaya_pengiriman = 0;
+$biaya_pengiriman_list = getBiayaPengiriman();
+foreach ($biaya_pengiriman_list as $p) {
+    if ($p['nama_pengiriman'] == $pengiriman) {
+        $biaya_pengiriman = $p['biaya'];
+        break;
+    }
+}
+$total_dengan_pengiriman = $total + $biaya_pengiriman;
+
 // Simpan transaksi utama
 $stmt = mysqli_prepare($conn, "INSERT INTO transaksi (id_user, total, metode_pengiriman, metode_pembayaran, status, tgl_transaksi) VALUES (?, ?, ?, ?, 'pending', NOW())");
-mysqli_stmt_bind_param($stmt, "iiss", $id_user, $total, $pengiriman, $pembayaran);
+mysqli_stmt_bind_param($stmt, "iiss", $id_user, $total_dengan_pengiriman, $pengiriman, $pembayaran);
 mysqli_stmt_execute($stmt);
 $id_transaksi = mysqli_insert_id($conn);
 mysqli_stmt_close($stmt);
@@ -212,7 +246,7 @@ if (!isset($_GET['id_produk'])) {
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Checkout - Buketminiku</title>
+  <title>Checkout - Bucketminiku</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/css/main.css">
   <style>
@@ -236,7 +270,7 @@ if (!isset($_GET['id_produk'])) {
             <h3 class="fw-bold mb-3">Checkout Berhasil!</h3>
           </div>
           <div class="card-body">
-            <p class="mb-4">Terima kasih telah berbelanja di Buketminiku.<br>Silakan upload bukti pembayaran di halaman <a href="riwayat.php" class="fw-bold text-pink">Riwayat</a>.</p>
+            <p class="mb-4">Terima kasih telah berbelanja di Bucketminiku.<br>Silakan upload bukti pembayaran di halaman <a href="riwayat.php" class="fw-bold text-pink">Riwayat</a>.</p>
             <a href="riwayat.php" class="btn btn-upload-green">Upload Bukti Pembayaran</a>
             <a href="katalog.php" class="btn btn-outline-secondary mt-2">Belanja Lagi</a>
           </div>
@@ -246,3 +280,4 @@ if (!isset($_GET['id_produk'])) {
   </div>
 </body>
 </html>
+

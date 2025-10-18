@@ -47,7 +47,7 @@ $result = mysqli_stmt_get_result($stmt);
   <!-- ✅ Sidebar Kiri -->
   <div class="sidebar">
     <div class="text-center mb-4">
-      <h4 class="fw-bold text-primary">Buketminiku</h4>
+      <h4 class="fw-bold text-primary">Bucketminiku</h4>
     </div>
     <a href="katalog.php" class="<?= !$filter_kategori ? 'active' : '' ?>">🏠 Semua Produk</a>
     <?php foreach ($kategori as $kat): ?>
@@ -65,7 +65,7 @@ $result = mysqli_stmt_get_result($stmt);
 
 <!-- ✅ Konten Produk -->
 <div class="content-area py-4 px-4">
-  <h3 class="fw-bold text-center mb-4">🌸 Wishlist Buketminiku</h3>
+  <h3 class="fw-bold text-center mb-4">🌸 Wishlist Bucketminiku</h3>
 
   <?php if (isset($_GET['msg'])): ?>
     <div class="alert alert-success text-center"><?= htmlspecialchars($_GET['msg']) ?></div>
@@ -194,3 +194,4 @@ $result = mysqli_stmt_get_result($stmt);
 </style>
 </body>
 </html>
+

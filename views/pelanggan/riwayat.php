@@ -32,7 +32,7 @@ $transaksi = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 <div class="sidebar-wrapper">
   <div class="sidebar">
-    <div class="text-center mb-4"><h4 class="fw-bold text-primary">Buketminiku</h4></div>
+    <div class="text-center mb-4"><h4 class="fw-bold text-primary">Bucketminiku</h4></div>
     <a href="katalog.php">🛍️ Katalog</a>
     <a href="keranjang.php">🛒 Keranjang</a>
     <a href="riwayat.php" class="active">📦 Riwayat</a>
@@ -106,3 +106,4 @@ $transaksi = mysqli_fetch_all($result, MYSQLI_ASSOC);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Login - Buketminiku</title>
+  <title>Login - Bucketminiku</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="card p-4">
-          <h3 class="text-center mb-4 fw-bold">Login ke Buketminiku</h3>
+          <h3 class="text-center mb-4 fw-bold">Login ke Bucketminiku</h3>
 
           <?php if ($error): ?>
             <div class="alert alert-danger"><?= $error ?></div>
@@ -67,3 +67,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
   </div>
 </body>
 </html>
+

@@ -26,7 +26,7 @@ $total_belanja = 0;
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
   <div class="container">
-    <a class="navbar-brand fw-bold text-primary" href="home_login.php">Buketminiku</a>
+    <a class="navbar-brand fw-bold text-primary" href="home_login.php">Bucketminiku</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -199,3 +199,4 @@ jumlahInputs.forEach(input => {
 
 </body>
 </html>
+
