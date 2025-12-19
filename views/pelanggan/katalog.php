@@ -65,6 +65,7 @@ $result = mysqli_stmt_get_result($stmt);
 
 <!-- ✅ Konten Produk -->
 <div class="content-area py-4 px-4">
+  <a href="home_login.php" class="btn btn-secondary mb-3">← Kembali ke Home</a>
   <h3 class="fw-bold text-center mb-4">🌸 Wishlist Bucketminiku</h3>
 
   <?php if (isset($_GET['msg'])): ?>
@@ -79,10 +80,13 @@ $result = mysqli_stmt_get_result($stmt);
       ?>
       <div class="col-md-4 mb-4">
         <div class="card produk-card h-100">
-          <img src="<?= $gambarPath ?>" alt="<?= htmlspecialchars($p['nama_produk']) ?>" class="produk-img">
+          <a href="produk_detail.php?id_produk=<?= $p['id'] ?>">
+            <img src="<?= $gambarPath ?>" alt="<?= htmlspecialchars($p['nama_produk']) ?>" class="produk-img">
+          </a>
           <div class="card-body">
-            <h5 class="card-title text-center"><?= htmlspecialchars($p['nama_produk']) ?></h5>
-            <p class="produk-deskripsi"><?= htmlspecialchars($p['deskripsi']) ?></p>
+            <a href="produk_detail.php?id_produk=<?= $p['id'] ?>" class="text-decoration-none">
+              <h5 class="card-title text-center text-pink"><?= htmlspecialchars($p['nama_produk']) ?></h5>
+            </a>
             <p class="fw-semibold text-muted text-center">Rp <?= number_format($p['harga'], 0, ',', '.') ?></p>
             <form method="POST" action="../../controllers/keranjangController.php" class="mb-2 keranjang-form">
               <input type="hidden" name="id_produk" value="<?= $p['id'] ?>">
@@ -95,11 +99,7 @@ $result = mysqli_stmt_get_result($stmt);
               <input type="hidden" name="tambah_keranjang" value="1">
               <button type="button" class="btn btn-outline-pink w-100 mb-2 btn-keranjang" data-id="<?= $p['id'] ?>">Masukkan Keranjang</button>
             </form>
-            <form method="GET" action="checkout.php" class="form-beli">
-              <input type="hidden" name="id_produk" value="<?= $p['id'] ?>">
-              <input type="hidden" name="jumlah" value="1" class="hidden-jumlah-beli" data-id="<?= $p['id'] ?>">
-              <button type="submit" class="btn btn-beli w-100">BELI</button>
-            </form>
+            <a href="produk_detail.php?id_produk=<?= $p['id'] ?>" class="btn btn-beli w-100 d-block text-center text-decoration-none">BELI</a>
           </div>
         </div>
       </div>
@@ -184,6 +184,22 @@ $result = mysqli_stmt_get_result($stmt);
       let val = parseInt(this.value);
       if (val > 0) {
         syncJumlah(id, val);
+      }
+    });
+  });
+
+  // Popup deskripsi pada hover gambar produk
+  document.querySelectorAll('.produk-img').forEach(img => {
+    img.addEventListener('mouseenter', function() {
+      const popup = this.nextElementSibling;
+      if (popup && popup.classList.contains('popup')) {
+        popup.style.display = 'block';
+      }
+    });
+    img.addEventListener('mouseleave', function() {
+      const popup = this.nextElementSibling;
+      if (popup && popup.classList.contains('popup')) {
+        popup.style.display = 'none';
       }
     });
   });

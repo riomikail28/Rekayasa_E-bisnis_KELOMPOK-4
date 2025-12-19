@@ -68,9 +68,9 @@ mysqli_stmt_close($stmt);
     </div>
     <div class="col-md-4">
       <div class="card card-summary shadow-sm p-3">
-        <h5 class="mb-2">💖 Wishlist</h5>
-        <p class="fs-5">3 produk disimpan</p>
-        <a href="produk.php" class="btn btn-pink btn-sm">Lihat Wishlist</a>
+        <h5 class="mb-2">💬 Chat Support</h5>
+        <p class="fs-5">Hubungi Admin</p>
+        <a href="../chat.php" class="btn btn-pink btn-sm">Buka Chat</a>
       </div>
     </div>
   </div>

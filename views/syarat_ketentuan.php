@@ -2,13 +2,15 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+require_once '../models/pengaturanModel.php';
+$settings = getAllSettings();
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Syarat & Ketentuan - Bucketminiku</title>
+  <title>Syarat & Ketentuan - <?= htmlspecialchars($settings['site_title'] ?? 'Bucketminiku') ?></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -23,13 +25,13 @@ if (session_status() === PHP_SESSION_NONE) {
     <div class="row">
       <div class="col-md-12">
         <h3>Penggunaan Umum</h3>
-        <p>Dengan mengakses dan menggunakan situs web Bucketminiku, Anda setuju untuk mematuhi syarat dan ketentuan ini. Jika Anda tidak setuju, silakan jangan gunakan situs web kami.</p>
+        <p>Dengan mengakses dan menggunakan situs web <?= htmlspecialchars($settings['site_title'] ?? 'Bucketminiku') ?>, Anda setuju untuk mematuhi syarat dan ketentuan ini. Jika Anda tidak setuju, silakan jangan gunakan situs web kami.</p>
         
         <h3>Pendaftaran dan Akun</h3>
         <ul>
           <li>Anda harus berusia minimal 18 tahun atau memiliki persetujuan orang tua/wali untuk mendaftar akun.</li>
           <li>Informasi yang diberikan harus akurat dan lengkap. Anda bertanggung jawab atas kerahasiaan password akun Anda.</li>
-          <li>Bucketminiku berhak menangguhkan atau menghapus akun yang melanggar ketentuan.</li>
+          <li><?= htmlspecialchars($settings['site_title'] ?? 'Bucketminiku') ?> berhak menangguhkan atau menghapus akun yang melanggar ketentuan.</li>
         </ul>
         
         <h3>Pesanan dan Pembayaran</h3>
@@ -47,10 +49,10 @@ if (session_status() === PHP_SESSION_NONE) {
         </ul>
         
         <h3>Hak Kekayaan Intelektual</h3>
-        <p>Semua konten di situs web ini, termasuk teks, gambar, dan desain, adalah milik Bucketminiku dan dilindungi oleh hukum hak cipta.</p>
+        <p>Semua konten di situs web ini, termasuk teks, gambar, dan desain, adalah milik <?= htmlspecialchars($settings['site_title'] ?? 'Bucketminiku') ?> dan dilindungi oleh hukum hak cipta.</p>
         
         <h3>Penafian</h3>
-        <p>Bucketminiku tidak bertanggung jawab atas kerugian tidak langsung yang timbul dari penggunaan situs web ini.</p>
+        <p><?= htmlspecialchars($settings['site_title'] ?? 'Bucketminiku') ?> tidak bertanggung jawab atas kerugian tidak langsung yang timbul dari penggunaan situs web ini.</p>
         
         <p>Ketentuan ini dapat diubah sewaktu-waktu tanpa pemberitahuan sebelumnya. Penggunaan situs web setelah perubahan berarti Anda menerima ketentuan baru.</p>
       </div>
@@ -60,7 +62,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <!-- Footer -->
 <footer class="text-center py-3 mt-5" style="background-color: #ffb6c1;">
-  &copy; 2025 Bucketminiku | WhatsApp: 0812-XXXX-XXXX | Instagram: @Bucketminiku
+  &copy; 2025 <?= htmlspecialchars($settings['site_title'] ?? 'Bucketminiku') ?> | WhatsApp: <?= htmlspecialchars($settings['contact_phone'] ?? '0812-XXXX-XXXX') ?> | Instagram: @Bucketminiku
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -7,7 +7,6 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 
 // Semua halaman admin yang diizinkan
 $adminPages = [
-    'tambah_produk',
     'tambah_kategori',
     'produk_admin',
     'edit_produk',
@@ -27,10 +26,29 @@ $adminPages = [
     'pengaturan_website',
     'laporan_keuangan',
     'manajemen_pengiriman',
-    'manajemen_stok',
+    'chat',
 ];
 
 $page = $_GET['page'] ?? 'produk_admin';
+
+// Action pages that perform redirects (no HTML output)
+$actionPages = [
+    'blokir_customer',
+    'buka_blokir_customer',
+    'hapus_customer',
+    'hapus_produk',
+    'upload_produk',
+    'validasi_transaksi',
+    'tambah_produk',
+];
+
+if (in_array($page, $actionPages)) {
+    $filePath = "pages/{$page}.php";
+    if (file_exists($filePath)) {
+        include $filePath;
+    }
+    exit; // Prevent further HTML output after action
+}
 ?>
 
 <!DOCTYPE html>
@@ -85,11 +103,6 @@ $page = $_GET['page'] ?? 'produk_admin';
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link <?= $page === 'tambah_produk' ? 'active' : '' ?>" href="dashboard_admin.php?page=tambah_produk">
-          <i class="fas fa-plus me-2"></i>Tambah Produk
-        </a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link <?= $page === 'laporan_penjualan' ? 'active' : '' ?>" href="dashboard_admin.php?page=laporan_penjualan">
           <i class="fas fa-chart-line me-2"></i>Laporan Penjualan
         </a>
@@ -125,8 +138,8 @@ $page = $_GET['page'] ?? 'produk_admin';
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link <?= $page === 'manajemen_stok' ? 'active' : '' ?>" href="dashboard_admin.php?page=manajemen_stok">
-          <i class="fas fa-warehouse me-2"></i>Manajemen Stok
+        <a class="nav-link <?= $page === 'chat' ? 'active' : '' ?>" href="dashboard_admin.php?page=chat">
+          <i class="fas fa-comments me-2"></i>Chat Support
         </a>
       </li>
     </ul>

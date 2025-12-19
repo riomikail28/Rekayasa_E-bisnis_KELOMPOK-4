@@ -7,11 +7,16 @@ if (!$id) {
   exit;
 }
 
-$query = "DELETE FROM produk WHERE id = $id";
+$query = "DELETE FROM detail_transaksi WHERE id_produk = $id";
 if (mysqli_query($conn, $query)) {
-  echo "<div class='alert alert-success'>Produk berhasil dihapus.</div>";
+  $query2 = "DELETE FROM produk WHERE id = $id";
+  if (mysqli_query($conn, $query2)) {
+    echo "<div class='alert alert-success'>Produk berhasil dihapus.</div>";
+  } else {
+    echo "<div class='alert alert-danger'>Gagal menghapus produk.</div>";
+  }
 } else {
-  echo "<div class='alert alert-danger'>Gagal menghapus produk.</div>";
+  echo "<div class='alert alert-danger'>Gagal menghapus detail transaksi terkait.</div>";
 }
 ?>
 <div class="container mt-3">

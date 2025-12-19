@@ -10,7 +10,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bucketminiku | Toko Bunga</title>
+  <title><?= htmlspecialchars($settings['site_title'] ?? 'Bucketminiku') ?> | <?= htmlspecialchars($settings['site_description'] ?? 'Toko Bunga') ?></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -35,32 +35,32 @@ if (session_status() === PHP_SESSION_NONE) {
       <!-- Card 1 -->
       <div class="col-md-3">
         <div class="card produk-card shadow-sm">
-          <img src="uploads/buket1.jpg" class="card-img-top" alt="Buket Bunga">
+          <img src="uploads/produk_1766151729.jpeg" class="card-img-top" alt="Buket Bunga">
           <div class="card-body">
-            <h5 class="card-title">Buket Mawar Merah</h5>
-            <p class="card-text">Rp 99.000</p>
-            <a href="#" class="btn btn-pink w-100">Beli</a>
+            <h5 class="card-title">Buket Artifical Flower Elegant</h5>
+            <p class="card-text">Rp 155.000</p>
+            <a href="auth/login.php" class="btn btn-pink w-100">Beli</a>
           </div>
         </div>
       </div>
       <!-- Card 2 -->
       <div class="col-md-3">
         <div class="card produk-card shadow-sm">
-          <img src="uploads/buket2.jpg" class="card-img-top" alt="Buket Snack">
+          <img src="uploads/produk_1766151052.jpeg" class="card-img-top" alt="Buket Snack">
           <div class="card-body">
-            <h5 class="card-title">Buket Snack & Minuman</h5>
-            <p class="card-text">Rp 85.000</p>
-            <a href="#" class="btn btn-pink w-100">Beli</a>
+            <h5 class="card-title">Buket Uang Eksklusif</h5>
+            <p class="card-text">Rp 150.000</p>
+            <a href="auth/login.php" class="btn btn-pink w-100">Beli</a>
           </div>
         </div>
       </div>
       <!-- Card 3 -->
       <div class="col-md-3">
         <div class="card produk-card shadow-sm">
-          <img src="uploads/buket3.jpg" class="card-img-top" alt="Buket Boneka">
+          <img src="uploads/produk_1760880158.jpg" class="card-img-top" alt="Buket Boneka">
           <div class="card-body">
-            <h5 class="card-title">Buket Boneka & Bunga</h5>
-            <p class="card-text">Rp 120.000</p>
+            <h5 class="card-title">Buket Boneka</h5>
+            <p class="card-text">Rp 99.000</p>
             <a href="#" class="btn btn-pink w-100">Beli</a>
           </div>
         </div>
@@ -72,7 +72,7 @@ if (session_status() === PHP_SESSION_NONE) {
           <div class="card-body">
             <h5 class="card-title">Buket Uang Kreatif</h5>
             <p class="card-text">Rp 150.000</p>
-            <a href="#" class="btn btn-pink w-100">Beli</a>
+            <a href="auth/login.php" class="btn btn-pink w-100">Beli</a>
           </div>
         </div>
       </div>
@@ -123,7 +123,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <!-- Footer -->
 <footer class="text-center py-3 mt-5" style="background-color: #ffb6c1;">
-  &copy; 2025 Bucketminiku | WhatsApp: 0812-XXXX-XXXX | Instagram: @Bucketminiku.id
+  &copy; 2025 <?= htmlspecialchars($settings['site_title'] ?? 'Bucketminiku') ?> | WhatsApp: <?= htmlspecialchars($settings['contact_phone'] ?? '0812-XXXX-XXXX') ?> | Instagram: @Bucketminiku.id
 </footer>
 
 <style>

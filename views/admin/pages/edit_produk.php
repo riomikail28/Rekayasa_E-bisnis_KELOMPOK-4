@@ -20,8 +20,9 @@ if (isset($_POST['submit'])) {
   $kategori = $_POST['kategori'];
   $harga = $_POST['harga'];
   $stok = $_POST['stok'];
+  $deskripsi = $_POST['deskripsi'];
 
-  $query = "UPDATE produk SET nama_produk='$nama', kategori='$kategori', harga='$harga', stok='$stok' WHERE id=$id";
+  $query = "UPDATE produk SET nama_produk='$nama', kategori='$kategori', harga='$harga', stok='$stok', deskripsi='$deskripsi' WHERE id=$id";
   if (mysqli_query($conn, $query)) {
     echo "<div class='alert alert-success'>Produk berhasil diperbarui!</div>";
   } else {
@@ -48,6 +49,10 @@ if (isset($_POST['submit'])) {
     <div class="mb-3">
       <label>Stok</label>
       <input type="number" name="stok" class="form-control" value="<?= $produk['stok'] ?>" required>
+    </div>
+    <div class="mb-3">
+      <label>Deskripsi</label>
+      <textarea name="deskripsi" class="form-control" rows="4" required><?= $produk['deskripsi'] ?></textarea>
     </div>
     <button type="submit" name="submit" class="btn btn-pink">Simpan Perubahan</button>
   </form>

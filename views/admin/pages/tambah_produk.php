@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../../../config/koneksi.php';
 
-$success = '';
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
@@ -38,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         $stmt = mysqli_prepare($conn, "INSERT INTO produk (nama_produk, deskripsi, harga, stok, gambar, kategori) VALUES (?, ?, ?, ?, ?, ?)");
         mysqli_stmt_bind_param($stmt, "ssdiss", $nama, $deskripsi, $harga, $stok, $filename, $kategori);
         if (mysqli_stmt_execute($stmt)) {
-          header("Location: dashboard_admin.php?page=produk_admin&status=success");
+          header("Location: ../dashboard_admin.php?page=produk_admin");
           exit;
         } else {
           $error = "Gagal menyimpan produk ke database.";
@@ -53,46 +52,82 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 ?>
 
 <div class="container mt-4">
-  <h4 class="fw-bold mb-3">➕ Tambah Produk Baru</h4>
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h4 class="card-title mb-0">➕ Tambah Produk Baru</h4>
+    </div>
+    <div class="card-body">
+      <?php if ($error): ?>
+        <div class="alert alert-danger"><?= $error ?></div>
+      <?php endif; ?>
 
-  <?php if ($error): ?>
-    <div class="alert alert-danger"><?= $error ?></div>
-  <?php endif; ?>
-
-  <form method="POST" enctype="multipart/form-data">
-    <div class="mb-3">
-      <label class="form-label">Nama Produk</label>
-      <input type="text" name="nama_produk" class="form-control" required>
+      <form method="POST" enctype="multipart/form-data">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Nama Produk</label>
+            <input type="text" name="nama_produk" class="form-control" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Kategori</label>
+            <select name="kategori" class="form-select" required>
+              <option value="">Pilih Kategori</option>
+              <option value="bunga">Bunga</option>
+              <option value="snack">Snack</option>
+              <option value="boneka">Boneka</option>
+              <option value="uang">Uang</option>
+              <option value="kado">Kado</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Deskripsi</label>
+          <textarea name="deskripsi" class="form-control" rows="3" required></textarea>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Harga</label>
+            <input type="number" name="harga" class="form-control" step="0.01" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Stok</label>
+            <input type="number" name="stok" class="form-control" required>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Gambar Produk</label>
+          <div class="input-group">
+            <input type="file" name="gambar" class="form-control custom-file-input" id="gambar" accept=".jpg,.jpeg,.png,.gif" required onchange="previewImage(event)">
+            <label class="input-group-text" for="gambar">Pilih Gambar</label>
+          </div>
+          <div id="image-preview" class="mt-2" style="display: none;">
+            <img id="preview-img" src="" alt="Preview" class="img-thumbnail" style="max-width: 200px; max-height: 200px;">
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="submit" name="submit" class="btn btn-success me-2">Upload Produk</button>
+          <a href="dashboard_admin.php?page=produk_admin" class="btn btn-outline-secondary">Kembali</a>
+        </div>
+      </form>
     </div>
-    <div class="mb-3">
-      <label class="form-label">Deskripsi</label>
-      <textarea name="deskripsi" class="form-control" rows="3" required></textarea>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Kategori</label>
-      <select name="kategori" class="form-select" required>
-        <option value="">Pilih Kategori</option>
-        <option value="bunga">Bunga</option>
-        <option value="snack">Snack</option>
-        <option value="boneka">Boneka</option>
-        <option value="uang">Uang</option>
-        <option value="kado">Kado</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Harga</label>
-      <input type="number" name="harga" class="form-control" step="0.01" required>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Stok</label>
-      <input type="number" name="stok" class="form-control" required>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Gambar Produk</label>
-      <input type="file" name="gambar" class="form-control" accept=".jpg,.jpeg,.png,.gif" required>
-    </div>
-    <button type="submit" name="submit" class="btn btn-success">Upload Produk</button>
-    <a href="dashboard_admin.php?page=produk_admin" class="btn btn-outline-secondary ms-2">Kembali</a>
-  </form>
+  </div>
 </div>
+
+<script>
+function previewImage(event) {
+  const file = event.target.files[0];
+  const preview = document.getElementById('image-preview');
+  const img = document.getElementById('preview-img');
+  
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      img.src = e.target.result;
+      preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  } else {
+    preview.style.display = 'none';
+  }
+}
+</script>
 

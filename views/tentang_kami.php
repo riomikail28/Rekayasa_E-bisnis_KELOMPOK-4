@@ -2,13 +2,15 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+require_once '../models/pengaturanModel.php';
+$settings = getAllSettings();
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Tentang Kami - Bucketminiku</title>
+  <title>Tentang Kami - <?= htmlspecialchars($settings['site_title'] ?? 'Bucketminiku') ?></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -40,7 +42,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <!-- Footer -->
 <footer class="text-center py-3 mt-5" style="background-color: #ffb6c1;">
-  &copy; 2025 Bucketminiku | WhatsApp: 0812-XXXX-XXXX | Instagram: https://www.instagram.com/Bucketminiku/
+  &copy; 2025 <?= htmlspecialchars($settings['site_title'] ?? 'Bucketminiku') ?> | WhatsApp: <?= htmlspecialchars($settings['contact_phone'] ?? '0812-XXXX-XXXX') ?> | Instagram: https://www.instagram.com/Bucketminiku/
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

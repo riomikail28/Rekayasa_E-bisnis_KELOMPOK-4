@@ -14,7 +14,10 @@ $registrasi_href = '/Rekayasa_E-bisnis_KELOMPOK-4/auth/registrasi.php';
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
   <div class="container">
-    <a class="navbar-brand fw-bold text-pink" href="<?php echo $brand_href; ?>">Bucketminiku</a>
+    <a class="navbar-brand fw-bold text-pink" href="<?php echo $brand_href; ?>">
+      <img src="/Rekayasa_E-bisnis_KELOMPOK-4/uploads/logo_bucketminiku.jpg" alt="Bucketminiku Logo" style="height: 40px; margin-right: 10px;">
+      Bucketminiku
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
