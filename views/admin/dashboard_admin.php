@@ -11,6 +11,10 @@ $adminPages = [
     'produk_admin',
     'edit_produk',
     'hapus_produk',
+    'daftar_diskon',
+    'tambah_diskon',
+    'edit_diskon',
+    'hapus_diskon',
     'laporan_penjualan',
     'daftar_customer',
     'detail_customer',
@@ -100,6 +104,11 @@ if (in_array($page, $actionPages)) {
       <li class="nav-item">
         <a class="nav-link <?= $page === 'produk_admin' ? 'active' : '' ?>" href="dashboard_admin.php?page=produk_admin">
           <i class="fas fa-box me-2"></i>Kelola Produk
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link <?= $page === 'daftar_diskon' ? 'active' : '' ?>" href="dashboard_admin.php?page=daftar_diskon">
+          <i class="fas fa-tags me-2"></i>Kelola Diskon
         </a>
       </li>
       <li class="nav-item">

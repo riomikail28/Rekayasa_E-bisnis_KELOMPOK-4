@@ -79,6 +79,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tambah_keranjang'])) 
     exit;
 }
 
+// ✅ Validasi kode diskon
+function validasiDiskon($kode_diskon) {
+    global $conn;
+    $query = "SELECT * FROM diskon WHERE kode_diskon = ? AND status = 'active' AND CURDATE() BETWEEN tanggal_mulai AND tanggal_akhir";
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, 's', $kode_diskon);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $diskon = mysqli_fetch_assoc($result);
+    mysqli_stmt_close($stmt);
+    return $diskon;
+}
+
+// ✅ Hitung total dengan diskon
+function hitungTotalDenganDiskon($total_belanja, $persentase_diskon) {
+    $diskon = $total_belanja * ($persentase_diskon / 100);
+    return $total_belanja - $diskon;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_jumlah') {
     session_start();
     $id_keranjang = $_POST['id_keranjang'] ?? null;
@@ -92,6 +111,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         echo json_encode(['success' => $success]);
     } else {
         echo json_encode(['success' => false, 'msg' => 'Data tidak valid']);
+    }
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'apply_diskon') {
+    session_start();
+    $kode_diskon = $_POST['kode_diskon'] ?? null;
+    $total_belanja = $_POST['total_belanja'] ?? 0;
+    header('Content-Type: application/json');
+    if ($kode_diskon) {
+        $diskon = validasiDiskon($kode_diskon);
+        if ($diskon) {
+            $total_dengan_diskon = hitungTotalDenganDiskon($total_belanja, $diskon['persentase_diskon']);
+            echo json_encode([
+                'success' => true,
+                'diskon' => $diskon['persentase_diskon'],
+                'total_diskon' => $total_belanja * ($diskon['persentase_diskon'] / 100),
+                'total_baru' => $total_dengan_diskon
+            ]);
+        } else {
+            echo json_encode(['success' => false, 'msg' => 'Kode diskon tidak valid atau sudah kadaluarsa']);
+        }
+    } else {
+        echo json_encode(['success' => false, 'msg' => 'Kode diskon tidak boleh kosong']);
     }
     exit;
 }

@@ -100,12 +100,29 @@ $total_belanja = 0;
         <div class="text-end mt-3">
           <h5 class="fw-bold">Total Belanja: <span class="text-success">Rp<?= number_format($total_belanja) ?></span></h5>
         </div>
+        <div class="mt-3">
+          <div class="row justify-content-end">
+            <div class="col-md-6">
+              <div class="input-group">
+                <input type="text" id="kode_diskon" class="form-control" placeholder="Masukkan kode diskon" style="border-radius:8px 0 0 8px;">
+                <button class="btn btn-primary" id="apply_diskon" style="border-radius:0 8px 8px 0;">Terapkan</button>
+              </div>
+              <div id="diskon_msg" class="mt-2"></div>
+              <div id="diskon-info" style="display:none;" class="mt-2">
+                <p class="mb-1">Diskon: <span id="diskon-amount" class="text-success fw-bold"></span></p>
+                <p class="mb-0">Total setelah diskon: <span id="total-diskon" class="text-success fw-bold"></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="text-end mt-4">
           <form method="POST" action="checkout.php">
             <?php foreach ($keranjang as $item): ?>
               <input type="hidden" name="id_produk[]" value="<?= $item['id_produk'] ?>">
               <input type="hidden" name="jumlah[]" value="<?= $item['jumlah'] ?>" class="hidden-jumlah" data-id="<?= $item['id_keranjang'] ?>">
             <?php endforeach; ?>
+            <input type="hidden" id="hidden_kode_diskon" name="kode_diskon" value="">
+            <input type="hidden" id="hidden_total_diskon" name="total_diskon" value="<?= $total_belanja ?>">
             <button type="submit" class="btn btn-success btn-lg">Checkout</button>
           </form>
         </div>
@@ -186,6 +203,49 @@ jumlahInputs.forEach(input => {
       updateJumlah(id, val, this);
       syncHiddenJumlah(id, val);
     }
+  });
+});
+
+// Fitur diskon
+document.getElementById('apply_diskon').addEventListener('click', function() {
+  const kode_diskon = document.getElementById('kode_diskon').value.trim();
+  const total_belanja = parseInt(document.querySelector('.text-end.mt-3 h5 span').textContent.replace(/[^\d]/g, ''));
+  const msgEl = document.getElementById('diskon_msg');
+  const diskonInfo = document.getElementById('diskon-info');
+  const diskonAmount = document.getElementById('diskon-amount');
+  const totalDiskon = document.getElementById('total-diskon');
+  const hiddenKode = document.getElementById('hidden_kode_diskon');
+  const hiddenTotal = document.getElementById('hidden_total_diskon');
+
+  if (!kode_diskon) {
+    msgEl.textContent = 'Masukkan kode diskon!';
+    msgEl.className = 'text-danger';
+    return;
+  }
+
+  fetch('../../controllers/keranjangController.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `action=apply_diskon&kode_diskon=${encodeURIComponent(kode_diskon)}&total_belanja=${total_belanja}`
+  }).then(res => res.json()).then(data => {
+    if (data.success) {
+      msgEl.textContent = `Diskon ${data.diskon}% berhasil diterapkan!`;
+      msgEl.className = 'text-success';
+      diskonAmount.textContent = 'Rp' + data.total_diskon.toLocaleString();
+      totalDiskon.textContent = 'Rp' + data.total_baru.toLocaleString();
+      diskonInfo.style.display = 'block';
+      hiddenKode.value = kode_diskon;
+      hiddenTotal.value = data.total_baru;
+    } else {
+      msgEl.textContent = data.msg;
+      msgEl.className = 'text-danger';
+      diskonInfo.style.display = 'none';
+      hiddenKode.value = '';
+      hiddenTotal.value = total_belanja;
+    }
+  }).catch(err => {
+    msgEl.textContent = 'Terjadi kesalahan!';
+    msgEl.className = 'text-danger';
   });
 });
 </script>

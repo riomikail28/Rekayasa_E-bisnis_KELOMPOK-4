@@ -97,6 +97,32 @@ foreach ($items as $item) {
     $total += $item['jumlah'] * $item['harga'];
 }
 
+// Cek diskon dari keranjang
+$kode_diskon = $_POST['kode_diskon'] ?? null;
+$total_diskon = $_POST['total_diskon'] ?? null;
+$diskon_applied = false;
+$persentase_diskon = 0;
+$nilai_diskon = 0;
+
+if ($kode_diskon && $total_diskon && is_numeric($total_diskon)) {
+    // Validasi diskon
+    require_once '../../config/koneksi.php';
+    $stmt = mysqli_prepare($conn, "SELECT persentase_diskon FROM diskon WHERE kode_diskon = ? AND status = 'active' AND CURDATE() BETWEEN tanggal_mulai AND tanggal_akhir");
+    mysqli_stmt_bind_param($stmt, "s", $kode_diskon);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    if ($row = mysqli_fetch_assoc($result)) {
+        $persentase_diskon = $row['persentase_diskon'];
+        $nilai_diskon = $total * ($persentase_diskon / 100);
+        $total_setelah_diskon = $total - $nilai_diskon;
+        if (abs($total_setelah_diskon - $total_diskon) < 1) { // Toleransi kecil untuk floating point
+            $total = $total_diskon;
+            $diskon_applied = true;
+        }
+    }
+    mysqli_stmt_close($stmt);
+}
+
 // Ambil input pengiriman dan pembayaran
 $pengiriman = $_POST['pengiriman'] ?? null;
 $pembayaran = $_POST['pembayaran'] ?? null;
@@ -169,6 +195,11 @@ if (!$pengiriman || !$pembayaran) {
                           <span class="fw-semibold"><?= htmlspecialchars($item['nama_produk']) ?></span> x <?= $item['jumlah'] ?> <span class="float-end text-success">Rp<?= number_format($item['jumlah'] * $item['harga']) ?></span>
                         </li>
                       <?php endforeach; ?>
+                      <?php if ($diskon_applied): ?>
+                        <li class="mb-1">
+                          <span class="fw-semibold">Diskon (<?= $persentase_diskon ?>%)</span> <span class="float-end text-danger">-Rp<?= number_format($nilai_diskon) ?></span>
+                        </li>
+                      <?php endif; ?>
                       <li class="mb-1" id="shipping-line" style="display: none;">
                         <span class="fw-semibold">Biaya Pengiriman</span> <span class="float-end text-success" id="shipping-cost">Rp0</span>
                       </li>
